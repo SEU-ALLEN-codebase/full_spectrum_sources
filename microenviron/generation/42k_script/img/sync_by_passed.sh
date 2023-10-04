@@ -1,0 +1,1 @@
+rsync -av --files-from=passed_256_5.txt vkzohj@172.16.1.100:/PBshare/SEU-ALLEN/Users/zuohan/data/enhanced_soma_images/ ./

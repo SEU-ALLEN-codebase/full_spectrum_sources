@@ -1,0 +1,17 @@
+steps:
+1. rm_multi: remove blocks with multi soma, output is a text list of 
+passed cases.
+2. enh: the images are lost after reinstall, but the script stays the 
+same, so I put another here.
+3. app2: the passed images are first synced to workstation and traced. 
+the server was too slow for app2.
+4. ntb: I traced all the ntb already on the server, and all are synced 
+on the workstation. I could have do the same with app2, but ntb speed 
+isn't affected, and I just happen to have enough data.
+5. seg_prune: prune the app2
+6. consensus: combine seg_prune result with ntb
+
+note:
+
+* many paths in scripts are inconsistent in this folder, because they 
+were not in the same folder, so I add the proper order for them in readme.
