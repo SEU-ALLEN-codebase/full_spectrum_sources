@@ -2,4 +2,7 @@ PY:
 astropy
 seaborn
 
+pymrmr
+cv2
+
 Vaa3D

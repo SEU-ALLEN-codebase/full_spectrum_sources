@@ -226,7 +226,7 @@ if __name__ == '__main__':
         mef = MEFeatures(feature_file, nodes_range=nodes_range, topk=topk)
         mef.calc_micro_env_features(mefile)
     
-    if 0:   # with statis micro-environ features
+    if 0:   # with statis micro-environ features (mean & std)
         nodes_range = (300, 1500)
         feature_file = './data/lm_features_d22_all.csv'
         mefile = f'./data/micro_env_features_nodes{nodes_range[0]}-{nodes_range[1]}_withoutNorm_statis.csv'

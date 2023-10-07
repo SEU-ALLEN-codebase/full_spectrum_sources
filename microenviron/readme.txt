@@ -1,6 +1,6 @@
 # Local Morphology Generation (Optional)
 
-The first step in constructing the microenvironment involves the generation of morphologies, which can encompass dendrites, complete morphologies, or any sub-neuronal arbors derived from full morphologies. In this project, we have utilized automatically traced local morphologies to represent local image blocks. As such, the initial phase necessitates the acquisition of an adequate number of morphologies from neuronal images. Below, we provide a comprehensive set of exemplary procedures for tracing neurons within extensive neuronal blocks.
+The first step in constructing the microenvironment involves the generation of morphologies, which can be dendrites, complete morphologies, or any sub-neuronal arbors derived from full morphologies. In this project, we have utilized automatically traced local morphologies to represent local image blocks. As such, the initial phase necessitates the acquisition of an adequate number of morphologies from neuronal images. Below, we provide a comprehensive set of exemplary procedures for tracing neurons within extensive neuronal blocks.
 
 ## Automatic Tracing Codes Location
 
@@ -48,9 +48,55 @@ The automatic tracing codes can be found at `generation/42k_script`. Prior to ut
    - Relevant codes can be found in the specified directory.
 
 
+# Microenvironment Construction
 
+A microenvironment is a spatially-tuned ensemble of neighboring neurons. In this project, we illustrate the process of generating microenvironments using 5 nearby neurons, each represented by their morphologies within 512x512x256 image blocks. Here are the steps for generating microenvironments:
 
-# Microenvironment construction
+1. **Calculate L-Measure Features for All Morphologies**
+
+   - We utilize the `global_neuron_feature` plugin integrated with Vaa3D to calculate L-Measure features for each neuron. You may opt to use other morphological features instead of L-Measure features. Alternatively, you can estimate L-Measure features using the L-Measure server (http://cng.gmu.edu:8080/Lm), which implements some features differently. This step results in obtaining 22-dimensional features for each neuron.
+   - Script: `calc_global_features.py`
+   - Location: `generation`
+   - Input: swc_dir - Directory containing all morphologies
+   - Output: L-Measure feature file for each neuron
+
+2. **Aggregate Additional Semantic Information**
+
+   - This step involves gathering additional semantic information, such as brain regions for all neurons and their soma locations. This information will be merged with all features to create a unified feature file containing features for all neurons.
+   - Script: `preprocessing.py`
+   - Location: `generation`
+   - Input:
+     - swc_dir - Directory containing all morphologies
+     - feature_dir - Directory containing all feature files, with each neuron having a feature file
+   - Output: Merged feature file (e.g., `lm_features_d22_all.csv`)
+
+3. **Construction of Microenvironments**
+
+   - As outlined in our manuscript, we first identify the top 5 neurons within a given radius. This radius is estimated as the 50th percentile of all distances between neurons and their top 5 nearest neighbors (refer to the "estimate_radius" function). A microenvironment is then defined as the collection of the target neuron and the selected top 5 (at most) neurons. The feature of a microenvironment is a distance-weighted summary of all neurons within that microenvironment.
+   - Script: `micro_env_features.py`
+   - Location: `generation`
+   - Input: The merged feature file (e.g., `./data/lm_features_d22_all.csv`)
+   - Output: Microenvironment feature file (e.g., `./data/micro_env_features_nodes300-1500_withoutNorm.csv`)
+
+# Microenvironment Analysis
+
+1. **Select the Most Discriminating Features Using mRMR**
+
+   - Based on the microenvironment features and their soma locations (soma-types), we identify the most discriminating features to facilitate visualization. We recommend using the top 3 features for ease of visualization in colorized 2D images.
+   - Script: `mRMR_fsel.py`
+   - Location: `analyses`
+   - Input: Microenvironment feature file (e.g., `micro_env_features_nodes300-1500_withoutNorm.csv`)
+   - Output: Features sorted by the mRMR score
+
+2. **Plot Microenvironment Feature Landscapes Across the Whole Mouse Brain**
+
+   - Script: `generate_me_map.py`
+   - Location: `analysis`
+   - Generation of feature maps: `generate_me_maps`
+   - Calculate feature transition along different paths:
+     - For paths 1 to 3: Run the function `sectional_dsmatrix`, and then `plot_me_dsmatrix`
+     - For path 4 (within CP region): Use `feature_evolution_CP_radial`
+   - Input: Microenvironment feature file (e.g., `micro_env_features_nodes300-1500_withoutNorm.csv`)
 
 
 

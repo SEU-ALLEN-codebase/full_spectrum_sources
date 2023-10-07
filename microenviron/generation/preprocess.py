@@ -22,7 +22,7 @@ from anatomy.anatomy_config import MASK_CCF25_FILE
 from anatomy.anatomy_core import parse_ana_tree
 
 import sys
-sys.path.append('../../brain_statistics')
+sys.path.append('../../neuron_population/generation')
 from common_func import load_regions, get_region_mapper
 
 def add_r316_regions(df, ana_dict, mask_regions):
@@ -161,7 +161,9 @@ def aggregate_information(feature_dir, swc_dir):
 
 
 if __name__ == '__main__':
+    # The directory `swc_dir` contains all the reconstructed morphologies in the format of SWC. The morphologies are registered to the CCFv3 space.
     swc_dir = '/PBshare/SEU-ALLEN/Users/yfliu/transtation/Research/platform/micro_environ/data/improved_reg/42k_local_morphology_new20230510_gcoord_final'
+    # Driectory containing the global features for each neuron
     feature_dir = './lm_features'
     aggregate_information(feature_dir, swc_dir)
 
