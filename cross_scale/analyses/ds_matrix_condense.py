@@ -16,7 +16,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 
 import sys
-sys.path.append('../common_lib')
+sys.path.append('../../common_lib')
 from common_utils import struct_dict, CorticalLayers, PstypesToShow, plot_sd_matrix
 
 sns.set_theme(style="whitegrid", rc={'legend.labelspacing': 1.0, 'font.weight': 'bold'})
@@ -226,7 +226,7 @@ if __name__ == '__main__':
     import sys; sys.path.append('../micro_environ/src')
     from config import __FEAT_NAMES__
 
-    celltype_file = '../common_lib/41586_2021_3941_MOESM4_ESM.csv'
+    celltype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     feat_files = {
         'microenviron': {
             'path': '../micro_environ/me_map_new20230510/data/gold_standard_me.csv',

@@ -110,7 +110,7 @@ def load_multiLevel_features(cache_file, data_dir, type_str, cnames, vname):
 
     return df
 
-def calc_interregional_stereotypy(data_dir='./levels', type_str='stype'):
+def calc_intraregional_stereotypy(data_dir='./levels', type_str='stype'):
     if type_str == 'stype':
         cols = (14,9,3)
         cnames = ('CTX', 'TH', 'STR')
@@ -179,7 +179,7 @@ def calc_interregional_stereotypy(data_dir='./levels', type_str='stype'):
     plt.close('all')
 
     
-def calc_interregional_stereotypy_ridge_plot(data_dir='./levels', type_str='stype'):
+def calc_intraregional_stereotypy_ridge_plot(data_dir='./levels', type_str='stype'):
     sns.set_theme(style="white", rc={"axes.facecolor": (0, 0, 0, 0)})
     vname = 'DS value'
     fontsize = 30
@@ -209,7 +209,7 @@ def calc_interregional_stereotypy_ridge_plot(data_dir='./levels', type_str='styp
         hspace = -0.8
         height = 1
     
-    cache_file = f'data/interregional_dsmatrix_{type_str}.csv'
+    cache_file = f'data/intraregional_dsmatrix_{type_str}.csv'
     df = load_multiLevel_features(cache_file, data_dir, type_str, cnames, vname)
     import ipdb; ipdb.set_trace()
     
@@ -297,7 +297,7 @@ def calc_distribution_statistics(data_dir='./levels', type_str='stype'):
         hspace = -0.5
         height = 1.0
 
-    cache_file = f'data/interregional_dsmatrix_{type_str}.csv'
+    cache_file = f'data/intraregional_dsmatrix_{type_str}.csv'
     df = load_multiLevel_features(cache_file, data_dir, type_str, cnames, vname)
 
     jname = 'level-type'
@@ -370,7 +370,7 @@ if __name__ == '__main__':
 
     for type_str in ['stype', 'ptype', 'cstype']:
         calc_ds_similarity_among_levels(type_str=type_str)
-        #calc_interregional_stereotypy(type_str=type_str)
-        calc_interregional_stereotypy_ridge_plot(type_str=type_str)
+        #calc_intraregional_stereotypy(type_str=type_str)
+        calc_intraregional_stereotypy_ridge_plot(type_str=type_str)
         calc_distribution_statistics(type_str=type_str)
     
