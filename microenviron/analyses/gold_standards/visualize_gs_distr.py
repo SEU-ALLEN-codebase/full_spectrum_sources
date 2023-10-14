@@ -10,6 +10,7 @@
 #
 #================================================================
 import sys
+sys.path.append(r'D:\code\support_lib\pylib')
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -99,7 +100,8 @@ def visualize_sd_matrix(region_feature_file):
     plot_sd_matrix(brain_structures, corr, 'gold_standard_sd.png', 'gold_standard-SD-matrix')
     
 if __name__ == '__main__':
-    lmfile = './lm_gs_local.csv'
+    #lmfile = './lm_gs_local.csv'
+    lmfile = './lm_gs_dendrite.csv'
     regional_feature_file = 'regional_features_gs.csv'
 
     #calc_regional_mean_features(lmfile, regional_feature_file, min_counts=10)

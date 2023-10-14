@@ -9,7 +9,8 @@
 #   Description  : 
 #
 #================================================================
-
+import sys
+sys.path.append(r'D:\code\support_lib\pylib')
 import os
 import glob
 import re

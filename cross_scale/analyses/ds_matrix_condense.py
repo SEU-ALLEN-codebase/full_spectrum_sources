@@ -210,7 +210,7 @@ def plot_dsmatrix_relplot(matfile, type_str='stype'):
     plt.yticks(fontsize=21)
 
     for artist in g.legend.legendHandles:
-        artist.set_edgecolor("1.")
+        artist.set_color("1.")
     plt.setp(g._legend.get_texts(), fontsize=16)
     plt.setp(g._legend.get_title(), fontsize=16)
     g._legend.set_bbox_to_anchor([1.01,0.3])
@@ -223,37 +223,37 @@ def plot_dsmatrix_relplot(matfile, type_str='stype'):
     
 
 if __name__ == '__main__':
-    import sys; sys.path.append('../micro_environ/src')
+    import sys; sys.path.append('../../microenviron/generation')
     from config import __FEAT_NAMES__
 
     celltype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     feat_files = {
         'microenviron': {
-            'path': '../micro_environ/me_map_new20230510/data/gold_standard_me.csv',
+            'path': '../../microenviron/me_map_new20230510/data/gold_standard_me.csv',
             'feat_names': __FEAT_NAMES__,
             'neuron': 'Cell name'
         },
         'fullMorpho': {
-            'path': '../full_morph/data/feature.txt',
+            'path': '../../full_morpho/data/feature.txt',
             'feat_names': __FEAT_NAMES__,
             'neuron': 'Cell name'
         },
         'arbor': {
-            'path': ('../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_axonal.csv',
-                  '../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_basal.csv',
-                  '../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_apical.csv'),
+            'path': ('../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_axonal.csv',
+                  '../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_basal.csv',
+                  '../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_apical.csv'),
             'feat_names': None,
             'drop_key': ['region'],
             'neuron': 'prefix',
         },
         'motif': {
-            'path': '../projection/sd_matrix/motif_features.csv',
+            'path': '../../sd_matrix/motif_features.csv',
             'feat_names': None,
             'neuron': 'index',
             'drop_key': None,
         },
         'bouton': {
-            'path': '../bouton/bouton_features/bouton_features.csv',
+            'path': '../../bouton/bouton_features.csv',
             'feat_names': ("Bouton Number", "TEB Ratio",
                           "Bouton Density", "Geodesic Distance",
                           "Bouton Interval", "Project Regions"),
@@ -275,7 +275,7 @@ if __name__ == '__main__':
     for type_str in ['stype', 'sctype', 'sptype']:
         if type_str != 'stype':
             continue
-        matfile = f'./multi-scale/corr_regionLevel_sdmatrix_heatmap_{type_str}_all.csv'
+        matfile = f'../multi-scale/corr_regionLevel_sdmatrix_heatmap_{type_str}_all.csv'
         plot_dsmatrix_relplot(matfile, type_str=type_str)
     
 

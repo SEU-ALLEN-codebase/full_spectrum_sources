@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.append('../../common_lib')
-sys.path.append('../../micro_environ/src')
+sys.path.append('../../microenviron/generation')
 from common_utils import load_type_from_excel, stype2struct, plot_sd_matrix, struct_dict, CorticalLayers, PstypesToShow
 from config import __FEAT_NAMES__
 

@@ -73,15 +73,15 @@ PstypesToShow = {
 def load_celltypes(celltype_file, column_name='Subclass_or_type', soma_type_merge=True):
     data = pd.read_csv(celltype_file)
     ptypes = data['Subclass_or_type']
-    stypes = data['Soma_region']
+    stypes = data['Manually_corrected_soma_region']
 
-    is_soma_type = column_name == 'Soma_region'
+    is_soma_type = column_name == 'Manually_corrected_soma_region'
     if is_soma_type:
         ctypes = stypes
     else:
         ctypes = ptypes
 
-    prefixs = data['Name']
+    prefixs = data['Cell name']
     ctype_dict = {}
     if is_soma_type and (not soma_type_merge):
         for name, ptype, ctype in zip(prefixs, ptypes, ctypes):

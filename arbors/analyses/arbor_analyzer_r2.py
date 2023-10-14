@@ -153,7 +153,7 @@ class ArborFeatures(object):
             return 0
         print(f'High density ratio: {1.0*high_density.sum()/len(density)}')
         
-        coords = np.round(self.swc_array[:, 2:5]).astype(np.int)[:, ::-1]
+        coords = np.round(self.swc_array[:, 2:5]).astype(np.int64)[:, ::-1]
         cmin = coords.min(axis=0)
         cmax = coords.max(axis=0)
         coords = coords - cmin
@@ -817,9 +817,9 @@ if __name__ == '__main__':
 
     arbor_dir_dict = {
         'axonal': '../data/axon_arbors_round2_ln',
-        'basal': '../data/basal80_sort',
-        'apical': '../data/apical80_sort',
-        'dendrite': ['../data/basal80_sort', '../data/apical80_sort']
+        'basal': '../data/basal_den_sort',
+        'apical': '../data/apical_den_sort',
+        'dendrite': ['../data/basal_den_sort', '../data/apical_den_sort']
     }
 
     soma_file = '../data/1891_somalist.txt'

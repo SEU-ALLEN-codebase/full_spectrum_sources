@@ -12,6 +12,7 @@
 
 import os
 import sys
+sys.path.append(r'D:\code\support_lib\pylib')
 import glob
 import time
 import csv
@@ -425,7 +426,7 @@ if __name__ == '__main__':
         elif source == 'STPT-Huang':
             match_str = '[1-9]*processed'
             tera_path = '/PBshare/Huang_Brains'
-        elif source == 'LSFM-Wu'
+        elif source == 'LSFM-Wu':
             tera_path = '/PBshare/Zhuhao_Wu'
             match_str = 'WHOLE_mouse_B*'
             res_ids = -1    # use -1 as it have relative low resolution

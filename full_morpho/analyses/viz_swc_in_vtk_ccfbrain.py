@@ -3,6 +3,7 @@
 '''
 usage:
 python <name.py> --v root.vtk --folder '/Users/jiangshengdian/Desktop/Daily/PhD_project/Platform/fullmorpho/data/morpho_showdata_for_clusters/3/*'
+python viz_swc_in_vtk_ccfbrain.py --v root.vtk --folder 'D:/mygitcode/full_spectrum_sources/arbors/data/axon_sort'
 '''
 import pandas as pd
 import numpy as np

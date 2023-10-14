@@ -10,6 +10,7 @@
 #
 #================================================================
 import sys
+sys.path.append(r'D:\code\support_lib\pylib')
 import numpy as np
 import pandas as pd
 from scipy.spatial import distance_matrix
@@ -63,7 +64,7 @@ def load_features_microenviron(gs_file, me_file, cell_type, nodes_range=(500,150
     nmin, nmax = nodes_range
     df_me = df_me[(df_me['Nodes'] >= nmin) & (df_me['Nodes'] <= nmax)]
     # remove reconstructions with nan
-    df_me = df_me[~(df_me.isna().sum(axis=1).astype(np.bool))]
+    df_me = df_me[~(df_me.isna().sum(axis=1).astype(bool))]
     # get the features of me
     me_keys = [f'{fn}_mean' for fn in __CMP_FEAT_NAMES__]
     df_me = df_me[['region_name_r316', *me_keys]]

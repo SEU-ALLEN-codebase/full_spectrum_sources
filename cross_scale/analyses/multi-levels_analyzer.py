@@ -67,7 +67,7 @@ def calc_ds_similarity_among_levels(data_dir='./levels', type_str='stype', struc
         label.set_fontsize(15)
 
     for artist in g.legend.legendHandles:
-        artist.set_edgecolor("1.")
+        artist.set_color("1.")
 
     plt.subplots_adjust(left=0.28, right=0.8, bottom=0.35)
 

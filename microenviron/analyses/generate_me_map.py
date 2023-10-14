@@ -9,6 +9,8 @@
 #   Description  : 
 #
 #================================================================
+import sys
+sys.path.append(r'D:\code\support_lib\pylib')
 import os
 import numpy as np
 import numbers
@@ -639,7 +641,7 @@ def feature_evolution_CP_radial(mefile, debug=True):
 
 
 # This is a trial function, and now it is deprecated
-@deprecated
+#@deprecated
 def feature_evolution_CP(mefile, debug=True):
     '''
     ['', '1', '2', '2a', '2b', '2/3', '3', '4', '4/5', '5', '5/6', '6a','6b', '6']:
