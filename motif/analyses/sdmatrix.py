@@ -139,6 +139,7 @@ def plot_struct_with_cortical_layer(main_tract_file, celltype_file, figname, reg
     with open(main_tract_file, 'rb') as fp:
         cdict = pickle.load(fp)
     df_ct = pd.read_csv(celltype_file, index_col='Cell name')
+    test_keys = df_ct.index        # add for bugfix
 
     structs = []
     features = []
@@ -150,6 +151,7 @@ def plot_struct_with_cortical_layer(main_tract_file, celltype_file, figname, reg
             features.append(fs)
 
             prefix = neuron[0]
+            if prefix not in test_keys: continue        # add for bugfix
             info = df_ct.loc[prefix]
             stype, cl = info.Manually_corrected_soma_region, info.Cortical_layer
             if cl is np.NaN:

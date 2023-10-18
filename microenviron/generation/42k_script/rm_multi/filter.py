@@ -8,7 +8,7 @@ import pickle
 
 
 if __name__ == '__main__':
-    all = Path("/home/vkzohj/data/enhanced_soma_images/all.txt")
+    all = Path("../230k/stage2_app2/all.txt")
     
     coords_pik='coords.pickle'
     with open(coords_pik, 'rb') as fp:

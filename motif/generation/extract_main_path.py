@@ -166,7 +166,7 @@ def wrapper(swcfile, scale_factor, outswc):
     mlen, plen = mpp.extract_main_tract(outswc)
 
 if __name__ == '__main__':
-    swc_dir = '/PBshare/SEU-ALLEN/Projects/fullNeurons/V2023_01_10/registration/S3_registered_ccf'
+    swc_dir = '../data/registration/S3_registered_ccf'
     out_dir = '../main_tracts_types'
     ctype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     min_files = 0

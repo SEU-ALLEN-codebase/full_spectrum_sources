@@ -3,7 +3,7 @@
 '''
 usage:
 python <name.py> --v root.vtk --folder '/Users/jiangshengdian/Desktop/Daily/PhD_project/Platform/fullmorpho/data/morpho_showdata_for_clusters/3/*'
-python viz_swc_in_vtk_ccfbrain.py --v root.vtk --folder 'D:/mygitcode/full_spectrum_sources/arbors/data/axon_sort'
+python full_morpho/analyses/viz_swc_in_vtk_ccfbrain.py --v full_morpho/analyses/root.vtk --folder 'D:/mygitcode/full_spectrum_sources/full_morpho/data/axon_sort'
 '''
 import pandas as pd
 import numpy as np
@@ -134,7 +134,8 @@ colordict={0:['Red'],1:['Blue'],2:['Dim_grey'],3:['Green'],4:['Magenta'],5:['Lim
            #5:['Magenta','Orchid'],6:['Gold','Yellow'],7:['Violet_dark','Violet'],8:['Black','Grey']}
 ### swc
 N=0
-for fd in glob.glob(args.folder):
+#for fd in glob.glob(args.folder):
+for fd in glob.glob(f'{args.folder}/*.swc'):
     linesPolyData=vtkPolyData()
     print(fd)
     swc=np.loadtxt(fd,comments='#')

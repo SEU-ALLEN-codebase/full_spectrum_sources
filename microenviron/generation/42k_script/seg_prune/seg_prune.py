@@ -1,6 +1,5 @@
 import sys
-
-sys.path.insert(0, '/PBshare/SEU-ALLEN/Users/zuohan/pylib')
+sys.path.append(r'D:\code\support_lib\pylib')
 import swc_handler
 import numpy as np
 import os
@@ -19,6 +18,7 @@ from sklearn.neighbors import KDTree
 from skimage import draw
 import traceback
 from queue import SimpleQueue
+import glob
 
 
 
@@ -417,15 +417,23 @@ def get_image(swc_path):
     return img_dir / Path(swc_path).relative_to(swc_dir).with_suffix('')
 
 
+overwrite = True
+debug = False
+node_downer_limit = 20
+swc_dir = '../230k/stage2_app2/out'
+
 if __name__ == '__main__':
-    overwrite = True
-    debug = False
-    node_downer_limit = 20
-    swc_dir = '../../230k_d1/stage2_app2/out'
+
     found_swc = 'all.txt'
-    os.system(f"[ -f {found_swc} ] || find {swc_dir} -name *swc > {found_swc}")
-    with open(found_swc) as f:
+    #os.system(f"[ -f {found_swc} ] || find {swc_dir} -name *swc > {found_swc}")
+    file_list = glob.glob(f'{swc_dir}/**/*.swc',recursive=True)     # add by gqb for bugfix
+    with open(found_swc,'w') as f:      # add by gqb for bugfix
+        for fname in file_list:
+            f.write(fname+'\n')
+
+    with open(found_swc,'r') as f:
         swc = [i.rstrip() for i in f.readlines()]
+    # add by gqb for bugfix
     print('Starting pruning..')
     with Pool(40) as pt:
         pt.map(main, swc, 10)

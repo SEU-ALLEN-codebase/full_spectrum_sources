@@ -2,7 +2,8 @@
 #import paraview
 #paraview.compatibility.major = 5
 #paraview.compatibility.minor = 11
-
+import sys
+sys.path.append(r'D:\ParaView\ParaView-5.11.0-Windows-Python3.9-msvc2017-AMD64\bin\Lib\site-packages')
 import os,glob
 from paraview.simple import *
 

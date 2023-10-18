@@ -332,6 +332,7 @@ def calc_basal_features(soma_types, arbor_dir, spos_dict, min_num_neurons=5, med
 
 def calc_axon_features(soma_types, arbor_dir, spos_dict, min_num_neurons=5, median=True, neurite_type='axonal'):
     fdict = {}
+    test_keys = spos_dict.keys()        # add for bugfix
     if neurite_type == 'axonal':
         keyword = 'axon'
     elif neurite_type == 'apical':
@@ -349,6 +350,7 @@ def calc_axon_features(soma_types, arbor_dir, spos_dict, min_num_neurons=5, medi
                 continue
          
             arbor_file = os.path.join(arbor_dir, f'{prefix}_{keyword}.swc._m3_lt.eswc')
+            if prefix not in test_keys: continue                # add for bugfix
             aa = AxonalArbors(stat_file, arbor_file, spos_dict[prefix])
             print(f'    arbor num: {aa.num_arbors()}')
             features_list = []

@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/PBshare/SEU-ALLEN/Users/zuohan/pylib')
+sys.path.append(r'D:\code\support_lib\pylib')
 import swc_handler
 import numpy as np
 import os
@@ -47,9 +47,11 @@ def main(in_ntb):
 
 
 if __name__ == '__main__':
-    ntb_dir = '../../230k_all/stage2_ntb'
-    swc_dir = '../stage3_seg_prune_weak'
-    os.system(f"find {ntb_dir} -name *swc > all.txt")
+    #ntb_dir = '../../230k_all/stage2_ntb'
+    ntb_dir = '../ntb'
+    #swc_dir = '../stage3_seg_prune_weak'
+    swc_dir = '../seg_prune'
+    #os.system(f"find {ntb_dir} -name *swc > all.txt")
     min_dist = 5
     seg_length_thresh = 10
     soma_radius = 15
