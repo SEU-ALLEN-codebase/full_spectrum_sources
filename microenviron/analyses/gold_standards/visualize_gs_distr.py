@@ -10,7 +10,7 @@
 #
 #================================================================
 import sys
-sys.path.append(r'D:\code\support_lib\pylib')
+sys.path.append('../../../pylib')
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -18,8 +18,9 @@ import matplotlib.pyplot as plt
 
 from anatomy.anatomy_core import parse_ana_tree
 
-sys.path.append('../../src')
-from config import __FEAT_NAMES__, plot_sd_matrix
+sys.path.append('../../../common_lib')
+from config import __FEAT_NAMES22__ as __FEAT_NAMES__
+from common_utils import plot_sd_matrix
 
 def calc_regional_mean_features(lmfile, outfile, min_counts=10):
     rnkey = 'region_name_r316'
@@ -97,7 +98,8 @@ def visualize_sd_matrix(region_feature_file):
     brain_structures = df.pop('brain_structures')
     nr = df.pop('NumRecons')
     corr = df.transpose().corr()
-    plot_sd_matrix(brain_structures, corr, 'gold_standard_sd.png', 'gold_standard-SD-matrix')
+    structs = np.unique(brain_structures.values)
+    plot_sd_matrix(brain_structures, structs, corr, 'gold_standard_sd.png', 'gold_standard-SD-matrix')
     
 if __name__ == '__main__':
     #lmfile = './lm_gs_local.csv'

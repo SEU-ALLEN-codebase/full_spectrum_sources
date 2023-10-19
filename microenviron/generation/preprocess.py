@@ -10,7 +10,7 @@
 #
 #================================================================
 import sys
-sys.path.append(r'D:\code\support_lib\pylib')
+sys.path.append(r'..\..\pylib')
 import os
 import glob
 import re
@@ -23,7 +23,7 @@ from anatomy.anatomy_config import MASK_CCF25_FILE
 from anatomy.anatomy_core import parse_ana_tree
 
 import sys
-sys.path.append('../../neuron_population/generation')
+sys.path.append('../../common_lib')
 from common_func import load_regions, get_region_mapper
 
 def add_r316_regions(df, ana_dict, mask_regions):
@@ -111,9 +111,9 @@ def aggregate_information(feature_dir, swc_dir):
         columns=['soma_x', 'soma_y', 'soma_z', 'dataset_name', 'brain_id', 
                  'pc11', 'pc12', 'pc13', 'pca_vr1', 'pca_vr2', 'pca_vr3'],
         index=swcnames
-    ).astype({'soma_x': np.float, 'soma_y': np.float, 'soma_z': np.float, 'pc11': np.float,
-            'pc12': np.float, 'pc13': np.float, 'pca_vr1': np.float, 'pca_vr2': np.float, 
-            'pca_vr3': np.float})
+    ).astype({'soma_x': np.float64, 'soma_y': np.float64, 'soma_z': np.float64, 'pc11': np.float64,
+            'pc12': np.float64, 'pc13': np.float64, 'pca_vr1': np.float64, 'pca_vr2': np.float64,
+            'pca_vr3': np.float64})
     print(df.dtypes)
     
     # get the region
@@ -122,7 +122,7 @@ def aggregate_information(feature_dir, swc_dir):
     mask = load_image(MASK_CCF25_FILE)  # z,y,x order!
     mask_regions = [idx for idx in np.unique(mask) if idx != 0]
 
-    sposs = np.round(df[['soma_x', 'soma_y', 'soma_z']].to_numpy()).astype(np.int)
+    sposs = np.round(df[['soma_x', 'soma_y', 'soma_z']].to_numpy()).astype(int)
     # clip
     np.clip(sposs, 0, np.array(mask.shape[::-1])-1, out=sposs)
     # region accessing in vectorized style
@@ -151,7 +151,7 @@ def aggregate_information(feature_dir, swc_dir):
         print(f'======> parsing feature for {dname}/{brain_id}')
         brain_features = pd.read_csv(brain_file, index_col=0)
         features.append(brain_features)
-    features = pd.concat(features, join='inner').astype(np.float)
+    features = pd.concat(features, join='inner').astype(np.float64)
     # concat with the overall information
     df = df.join(features, how='inner')
 
@@ -163,7 +163,7 @@ def aggregate_information(feature_dir, swc_dir):
 
 if __name__ == '__main__':
     # The directory `swc_dir` contains all the reconstructed morphologies in the format of SWC. The morphologies are registered to the CCFv3 space.
-    swc_dir = '/PBshare/SEU-ALLEN/Users/yfliu/transtation/Research/platform/micro_environ/data/improved_reg/42k_local_morphology_new20230510_gcoord_final'
+    swc_dir = './data/improved_reg/42k_local_morphology_new20230510_gcoord_final'
     # Driectory containing the global features for each neuron
     feature_dir = './lm_features'
     aggregate_information(feature_dir, swc_dir)

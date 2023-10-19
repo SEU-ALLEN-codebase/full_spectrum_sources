@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+    #!/usr/bin/env python
 
 #================================================================
 #   Copyright (C) 2023 Yufeng Liu (Braintell, Southeast University). All rights reserved.
@@ -18,12 +18,12 @@ import pandas as pd
 import numpy as np
 
 sys.path.append('../../src')
-from config import __FEAT_NAMES__
+from config import __FEAT_NAMES22__ as __FEAT_NAMES__
 
-def calc_global_features(swc_file, vaa3d='/home/lyf/Softwares/installation/Vaa3D/v3d_external/bin/vaa3d'):
-    cmd_str = f'xvfb-run -a -s "-screen 0 640x480x16" {vaa3d} -x global_neuron_feature -f compute_feature -i {swc_file}'
+def calc_global_features(swc_file, vaa3d='D:/Vaa3D/Vaa3D-x.1.1.2_Windows_64bit/Vaa3D-x.exe'):
+    cmd_str = f'{vaa3d} /x global_neuron_feature /f compute_feature /i {swc_file}'
     p = subprocess.check_output(cmd_str, shell=True)
-    output = p.decode().splitlines()[32:-2]
+    output = p.decode().splitlines()[15:-1]
     info_dict = {}
     for s in output:
         it1, it2 = s.split(':')

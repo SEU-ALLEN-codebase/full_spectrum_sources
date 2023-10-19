@@ -73,8 +73,7 @@ class MEFeatures:
         
         df = self.df.copy()
         df_mef = df.copy()
-        #feat_names = __FEAT_NAMES__ + ['pc11', 'pc12', 'pc13', 'pca_vr1', 'pca_vr2', 'pca_vr3']
-        feat_names = __FEAT_NAMES__ + []
+        feat_names = __FEAT_NAMES__ + ['pc11', 'pc12', 'pc13', 'pca_vr1', 'pca_vr2', 'pca_vr3']
         mefeat_names = [f'{fn}_me' for fn in feat_names]
 
         df_mef[mefeat_names] = 0
