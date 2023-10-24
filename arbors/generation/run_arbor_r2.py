@@ -26,9 +26,9 @@ def run_autoarbor(*args):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--r', help='round of autoarborization', type=str)
-parser.add_argument('--L', help='Lower Bound', type=int)
-parser.add_argument('--H', help='Higher Bound', type=int)
+parser.add_argument('--r', help='round of autoarborization', type=str, default=1)
+parser.add_argument('--L', help='Lower Bound', type=int, default=1)
+parser.add_argument('--H', help='Higher Bound', type=int, default=4)
 parser.add_argument('--swc_dir', help='the folder containing SWCs',
                     type=str, default='../data/axon_sort')
 args = parser.parse_args()

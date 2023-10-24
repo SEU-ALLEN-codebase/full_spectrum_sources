@@ -1,5 +1,5 @@
 import sys
-sys.path.append(r'D:\code\support_lib\pylib')
+sys.path.append(r'..\..\..\..\pylib')
 import swc_handler
 import numpy as np
 import os

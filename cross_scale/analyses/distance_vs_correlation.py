@@ -10,7 +10,7 @@
 #
 #================================================================
 import sys
-sys.path.append(r'D:\code\support_lib\pylib')
+sys.path.append(r'..\..\pylib')
 import os
 import sys
 import random
