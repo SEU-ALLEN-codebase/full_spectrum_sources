@@ -1,5 +1,27 @@
 # neuron_population
 ## Description
+### generation/calc_brain_statis.py
+This Python script is a collection of functions and a main block of code for processing brain images. Here's a high-level description of what the code does:
+
+1. It imports various libraries and modules for image processing and data manipulation.
+
+2. It defines several functions for tasks such as reading image files, performing image processing operations (e.g., thresholding, filtering), and computing statistics on brain images.
+
+3. The script defines a function `get_zeng_threshs` which reads a CSV file containing brain ID, current threshold, and supposed threshold, and returns a dictionary mapping brain IDs to threshold values.
+
+4. It defines a function `get_filesize` that computes the file sizes of TeraFly block images, potentially saving 2D MIP images for debugging purposes.
+
+5. It defines a function `get_block_counts` which calculates block counts based on provided dimensions and parameters.
+
+6. The function `ada_thresholding` applies adaptive thresholding to an image.
+
+7. The class `CalcBrainStatis` appears to be a brain image statistics calculator. It has methods for initializing the object, setting various parameters, and performing statistical calculations on brain images.
+
+8. The script defines a function `brain_statis_wrapper` which serves as a wrapper for processing brain images. It loads a mask image, sets various parameters, and then performs statistical calculations on the brain image.
+
+9. The main block of code at the bottom of the script sets up parameters and uses multiprocessing to process brain images in parallel. It specifies source directories and IDs, sets thresholds, and calls the `brain_statis_wrapper` function for each brain image.
+
+Please note that the code relies on external modules and libraries, so it requires the appropriate environment to run successfully. Additionally, some functionalities may be specific to neuroscience or image processing applications.
 ## Usage
 ### Generation
 In directory *neuron_population/generation*, use
