@@ -9,6 +9,8 @@
 #   Description  : 
 #
 #================================================================
+import sys
+sys.path.append(r'..\..\pylib')
 import os
 import numpy as np
 import numbers
@@ -476,9 +478,9 @@ def plot_me_dsmatrix(feat_file, feat_file_histeq, axid, min_num_samples=10):
     '''
 
     # do clustering
-    fmean = df.groupby('rid').mean()
-    fstd = df.groupby('rid').std()
-    fmedian = df_histeq.groupby('rid').median()
+    fmean = df.groupby('rid').mean(numeric_only=True)
+    fstd = df.groupby('rid').std(numeric_only=True)
+    fmedian = df_histeq.groupby('rid').median(numeric_only=True)
     fmerge = fmean.merge(fstd, how='inner', on='rid').merge(fmedian, how='inner', on='rid')[['f1_x', 'f2_x', 'f3_x', 'f1_y', 'f2_y', 'f3_y', 'f1', 'f2', 'f3']]
     nclass = 6
     palette = {
@@ -639,7 +641,7 @@ def feature_evolution_CP_radial(mefile, debug=True):
 
 
 # This is a trial function, and now it is deprecated
-@deprecated
+#@deprecated
 def feature_evolution_CP(mefile, debug=True):
     '''
     ['', '1', '2', '2a', '2b', '2/3', '3', '4', '4/5', '5', '5/6', '6a','6b', '6']:
@@ -789,9 +791,9 @@ if __name__ == '__main__':
     #colorize_atlas2d_cv2(annot=True, fmt=fmt)
 
     #sectional_dsmatrix(mefile, 'me_dsmatrix', histeq=False, flip_to_left=True, mode=mode, findex=findex)
-    #dsfile = 'me_dsmatrix_mip1.csv'
-    #dsfile_histeq = 'me_dsmatrix_mip1_histeq.csv'
-    #plot_me_dsmatrix(dsfile, dsfile_histeq, axid=1)
+    dsfile = 'me_dsmatrix_mip1.csv'
+    dsfile_histeq = 'me_dsmatrix_mip1_histeq.csv'
+    plot_me_dsmatrix(dsfile, dsfile_histeq, axid=1)
 
-    feature_evolution_CP_radial(mefile, debug=False)
+    #feature_evolution_CP_radial(mefile, debug=False)
     

@@ -1,0 +1,19 @@
+numpy==1.26.0
+pandas==2.1.1
+scipy==1.11.3
+matplotlib==3.8.0    (pillow==10.0.1)
+scikit-learn==1.3.1
+scikit-image==0.22.0    (imageio==2.31.5  tifffile==2023.9.26)
+connected-components-3d==3.12.3
+seaborn==0.13.0
+SimpleITK==2.3.0
+vtk==9.2.6
+statsmodels==0.14.0
+astropy==5.3.4
+opencv-python==4.8.1.78
+cython==3.0.3
+pymrmr==0.1.11
+torch==2.1.0
+torchvision==0.16.0
+torchaudio==2.1.0
+ipdb==0.13.13

@@ -92,7 +92,7 @@ def aarbor_adaptive_spectral_swc(filename, min_my_n_clusters, max_my_n_clusters)
     tmpfile = filename + '_tmp_swc.csv'
     df = pandas.read_csv(tmpfile,
                          sep=' ')
-    os.system(f'rm -f {tmpfile}')
+    os.remove(f'{tmpfile}')
 
     X = df[['x', 'y', 'z']]
     Y = X.values

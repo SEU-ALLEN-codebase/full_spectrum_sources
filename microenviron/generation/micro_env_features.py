@@ -9,6 +9,8 @@
 #   Description  : 
 #
 #================================================================
+import sys
+sys.path.append(r'D..\..\pylib')
 import time
 import numpy as np
 import pandas as pd

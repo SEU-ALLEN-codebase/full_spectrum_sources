@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.append('../../common_lib')
-sys.path.append('../../micro_environ/src')
+sys.path.append('../../microenviron/generation')
 from common_utils import load_type_from_excel, stype2struct, plot_sd_matrix, struct_dict, CorticalLayers, PstypesToShow
 from config import __FEAT_NAMES__
 
@@ -122,7 +122,7 @@ def plot_struct_with_ptype(feat_file, celltype_file, figname, normalize=True, mi
 if __name__ == '__main__':
     feat_file = '../data/feature.txt'
     celltype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
-    outdir = '../../sd_matrix/levels'
+    outdir = '../data/sd_matrix/levels'
 
     if 1:
         # stypes

@@ -9,7 +9,8 @@
 #   Description  : 
 #
 #================================================================
-
+import sys
+sys.path.append(r'..\..\pylib')
 import os
 import itertools
 import glob
@@ -138,6 +139,7 @@ def plot_struct_with_cortical_layer(main_tract_file, celltype_file, figname, reg
     with open(main_tract_file, 'rb') as fp:
         cdict = pickle.load(fp)
     df_ct = pd.read_csv(celltype_file, index_col='Cell name')
+    test_keys = df_ct.index        # add for bugfix
 
     structs = []
     features = []
@@ -149,6 +151,7 @@ def plot_struct_with_cortical_layer(main_tract_file, celltype_file, figname, reg
             features.append(fs)
 
             prefix = neuron[0]
+            if prefix not in test_keys: continue        # add for bugfix
             info = df_ct.loc[prefix]
             stype, cl = info.Manually_corrected_soma_region, info.Cortical_layer
             if cl is np.NaN:
@@ -179,6 +182,7 @@ def plot_struct_with_ptype(main_tract_file, celltype_file, figname, ptypes, incl
     with open(main_tract_file, 'rb') as fp:
         cdict = pickle.load(fp)
     df_ct = pd.read_csv(celltype_file, index_col='Cell name')
+    test_keys = df_ct.index  # add for bugfix
 
     structs = []
     features = []
@@ -190,6 +194,7 @@ def plot_struct_with_ptype(main_tract_file, celltype_file, figname, ptypes, incl
             features.append(fs)
 
             prefix = neuron[0]
+            if prefix not in test_keys: continue  # add for bugfix
             info = df_ct.loc[prefix]
             stype, pt = info.Manually_corrected_soma_region, info.Subclass_or_type
             if pt is np.NaN:
@@ -253,7 +258,7 @@ if __name__ == '__main__':
             figname = os.path.join(outdir, f'sdmatrix_motif_stype_{structure.lower()}')
             plot_struct(main_tract_file, figname, regions=regions, include_coord=include_coord, vmin=-0.4, vmax=0.8, annot=False)
 
-    if 0:
+    if 1:
         # ptypes
         structures = [key for key in PstypesToShow.keys()] + ['all']
         regions_list = [value for value in PstypesToShow.values()]
@@ -263,7 +268,7 @@ if __name__ == '__main__':
             plot_struct_with_ptype(main_tract_file, celltype_file, figname, regions, include_coord=include_coord, vmin=-0.4, vmax=0.8, annot=False)
 
 
-    if 1:
+    if 0:
         figname = os.path.join(outdir, f'sdmatrix_motif_cstype_all')
         plot_struct_with_cortical_layer(main_tract_file, celltype_file, figname, CorticalLayers, '', True, vmin=-0.4, vmax=0.8, annot=False)
 
