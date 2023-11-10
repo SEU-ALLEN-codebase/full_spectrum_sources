@@ -7,7 +7,7 @@ The project offers a comprehensive framework for extracting and analyzing neuron
 
 ### Shared utilities
 - common_lib
-- pylib. This module is designed to offer fundamental utilities for tasks such as parsing and saving 3D images and morphologies in SWC file format, as well as esti morphological and topological analyses. Additionally, the project provides tools for mouse brain atlas analyses and visualization. For the most up-to-date versions of this module, please visit the following link: https://github.com/SEU-ALLEN-codebase/pylib.
+- pylib. This module is designed to offer fundamental utilities for tasks such as parsing and saving 3D images and morphologies in SWC file format, as well as estimating morphological and topological analyses. Additionally, the project provides tools for mouse brain atlas analyses and visualization. For the most up-to-date versions of this module, please visit the following link: https://github.com/SEU-ALLEN-codebase/pylib.
 
 ### Major modules
 [motif](./motif/README.md)
