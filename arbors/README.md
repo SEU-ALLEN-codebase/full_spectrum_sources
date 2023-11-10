@@ -56,4 +56,4 @@ Make sure you are in the correct working directory where the script arbor_analyz
 
 ### Arbor plotting[`./analyses`]
 1. Generate the feature dotted heatmap for arbor features: Turn on the specific plotting functions in the script `arbor_analyzer_r2.py`. 
-2. Other panels can be found in the R scripts and ipython notebook files in the `analyses` directory
+2. Other panels can be found in the R scripts and ipython notebook files in the `analyses` directory. Related input and intermediate files can be found in `../../data_notebook/arbors`
