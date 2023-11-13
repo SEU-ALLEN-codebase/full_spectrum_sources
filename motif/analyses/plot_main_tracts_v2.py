@@ -9,7 +9,8 @@
 #   Description  : 
 #
 #================================================================
-
+import sys
+sys.path.append(r'..\..\pylib')
 import os
 import glob
 import cv2

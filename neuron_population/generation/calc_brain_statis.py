@@ -16,9 +16,11 @@ import glob
 import time
 import csv
 from collections import Counter
-from skimage.filters import meijering
-from cythonized.img_pca_filter import img_pca_test
-from cythonized.ada_thr import adaptive_threshold
+
+sys.path.append('img_pca_filter/img_pca_filter')
+sys.path.append('neuron-image-denoise-py')
+from img_pca_filter import img_pca_test
+from neuron_image_denoise.filter import adaptive_denoise
 
 import numpy as np
 import pandas as pd
@@ -27,6 +29,7 @@ import matplotlib.pyplot as plt
 import torch
 import torch.nn.functional as F
 
+sys.path.append('../../pylib')
 from file_io import load_image, save_image, get_tera_res_path
 from image_utils import get_mip_image
 
@@ -39,7 +42,7 @@ def get_zeng_threshs(thresh_file):
     thresh_dict = dict(zip(brains, threshs))
     return thresh_dict
 
-fMOST_Zeng_THRESH = get_zeng_threshs(thresh_file='../brain_statistics/statis_out_old/statis_out_adaThr_all/fMOST-Zeng/threshold_merged_20230424_fmost1.txt')
+fMOST_Zeng_THRESH = get_zeng_threshs(thresh_file='threshold_merged_20230424_fmost1.txt')
 
 
 def get_filesize(tera_dir, res_id=-3, outdir=None):
@@ -130,8 +133,9 @@ def ada_thresholding(img, block_counts, fg_thresh, h=5, d=3, cuda=True):
     return diff
 
 class CalcBrainStatis(object):
-    def __init__(self, tera_dir, res_id_statis=-3, mip_dir='', cuda=True, fmt='tif'):
+    def __init__(self, tera_dir, out_img_dir, res_id_statis=-3, mip_dir='', cuda=True, fmt='tif'):
         self.tera_dir = tera_dir
+        self.out_img_dir = out_img_dir
         self.res_id_statis = res_id_statis
         assert (res_id_statis < 0)  # -1: the highest resolution, -2: second-highest, -3,...,
         self.multiplier = np.power(2, np.fabs(res_id_statis)-1)
@@ -208,8 +212,24 @@ class CalcBrainStatis(object):
         region_counter = Counter(regions)
         return region_counter
 
-    # @staticmethod
-    # def detect_anisotropy(image):
+    @staticmethod
+    def save_mask(outfile, img, is_img=False, is_mask=False):
+        output_dir = os.path.split(outfile)[0]
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        if not is_img:
+            img = load_image(img)
+            img = np.zeros(img.shape, dtype=np.uint8)
+        else:
+            if is_mask:
+                img = img.astype(np.uint8)
+            else:
+                img = np.zeros(img.shape, dtype=np.uint8)
+
+        if img.ndim == 3: img = np.expand_dims(img, 0)
+
+        save_image(outfile, img, useCompression=True)
         
 
     def brain_statis(self, filesize_thresh=1.7, vmax_thresh=300, fg_thresh=300, save_mip=True, start_x=0, start_y=0, start_z=0):
@@ -233,14 +253,19 @@ class CalcBrainStatis(object):
             if n_processed % display_freq == 0:
                 print(f'--> Procssed: {n_processed} in {time.time() - t0:.4f}s. \t\tStatis: small: {n_small_block}, low-quality: {n_lowQ_block}, high-quality: {n_highQ_block}')
 
+            # handling the pathway
+            output_file = block_file.replace(self.tera_dir, self.out_img_dir)
+
             fs = os.path.getsize(block_file) / 1000. / 1000.
             if fs < filesize_thresh:
                 n_small_block += 1
+                self.save_mask(output_file, block_file, is_img=False)
                 continue
 
             # filter with vmax
             img = load_image(block_file)
             if img.ndim == 4: img = img[0]
+            
             if idx_file == 0:   # get the dimension of each block, only once!
                 self.set_strides_through_block(img)
                 # self.bc = get_block_counts(self.strides[2], self.strides[0], self.strides[1])
@@ -251,6 +276,7 @@ class CalcBrainStatis(object):
             vmax = img.max()
             if vmax < vmax_thresh:
                 n_lowQ_block += 1
+                self.save_mask(output_file, img, is_img=True)
                 continue
 
             n_highQ_block += 1
@@ -261,7 +287,8 @@ class CalcBrainStatis(object):
             
             # do ada_thresholding
             # img_a = ada_thresholding(img, self.bc, fg_thresh=fg_thresh, cuda=self.cuda)
-            img_a = adaptive_threshold(img.astype(np.uint16))
+            #img_a = adaptive_threshold(img.astype(np.uint16))
+            img_a = adaptive_denoise(img.astype(np.uint16), (5, 5, 5), ada_sampling=3, flare_sampling=0)
             img_adtThr = img_a >= fg_thresh
             
             # dim modulo stride, and get remaining distance to the bigger nearest multiple of stride
@@ -301,8 +328,10 @@ class CalcBrainStatis(object):
             img_a = img_a.astype(bool)
             cur_counter = self.block_statis(block_file, img_a, start_x=start_x, start_y=start_y, start_z=start_z)
             brain_counter = brain_counter + cur_counter
-            # do pca filtering
-            # import ipdb; ipdb.set_trace()
+
+            # saving out
+            self.save_mask(output_file, img_a, is_img=True, is_mask=True)
+
 
             if save_mip and np.random.random() < .1:
                 # save mip for inspection
@@ -328,7 +357,7 @@ class CalcBrainStatis(object):
 
         return brain_counter
 
-def brain_statis_wrapper(tera_dir, mask_file_dir, out_dir, max_res_dims, mask_dims, filesize_thresh, brain_id, 
+def brain_statis_wrapper(tera_dir, mask_file_dir, out_dir, out_img_dir, max_res_dims, mask_dims, filesize_thresh, brain_id, 
                          res_ids=-3, source='fMOST-Zeng', cuda=True):
     csv_out = os.path.join(out_dir, f'{brain_id}.csv')
     if os.path.exists(csv_out):
@@ -360,7 +389,7 @@ def brain_statis_wrapper(tera_dir, mask_file_dir, out_dir, max_res_dims, mask_di
     else:
         fmt = 'tif'
 
-    cbs = CalcBrainStatis(tera_dir, mip_dir=mip_dir, cuda=cuda, res_id_statis=res_ids, fmt=fmt)
+    cbs = CalcBrainStatis(tera_dir, out_img_dir, mip_dir=mip_dir, cuda=cuda, res_id_statis=res_ids, fmt=fmt)
     cbs.set_region_mask(mask, max_res_dims, mask_dims)
     if source == 'fMOST-Zeng':
         _, _, vmean, vstd = cbs.get_image_range()
@@ -409,7 +438,9 @@ if __name__ == '__main__':
 
     tera_downsize_file = '../brain_statistics/ccf_info/TeraDownsampleSize.csv'
     mask_file_dir = '/PBshare/SEU-ALLEN/Users/ZhixiYun/data/registration/Inverse'
-    for source in ['LSFM-Wu','LSFM-Osten']:
+    output_img_dir = '/data/lyf/data/neurite_detection_20231101'
+
+    for source in ['fMOST-Zeng']:
         out_dir = f'./unzipped/{source}'
         res_ids = -3
         filesize_thresh = 1.7
@@ -425,7 +456,7 @@ if __name__ == '__main__':
         elif source == 'STPT-Huang':
             match_str = '[1-9]*processed'
             tera_path = '/PBshare/Huang_Brains'
-        elif source == 'LSFM-Wu'
+        elif source == 'LSFM-Wu':
             tera_path = '/PBshare/Zhuhao_Wu'
             match_str = 'WHOLE_mouse_B*'
             res_ids = -1    # use -1 as it have relative low resolution
@@ -482,9 +513,13 @@ if __name__ == '__main__':
                     continue
   
             print(brain_id)           
+            out_img_dir = os.path.join(output_img_dir, str(brain_id))
+            if not os.path.exists(out_img_dir):
+                os.mkdir(out_img_dir)
+
             # if brain_id != 17298: continue
-            args = tera_dir, mask_file_dir, out_dir, max_res_dims, mask_dims, filesize_thresh, brain_id, res_ids, source, False
-            # brain_statis_wrapper(*args)
+            args = tera_dir, mask_file_dir, out_dir, out_img_dir, max_res_dims, mask_dims, filesize_thresh, brain_id, res_ids, source, False
+            #brain_statis_wrapper(*args)
             args_list.append(args)
  
         print('\n\n')

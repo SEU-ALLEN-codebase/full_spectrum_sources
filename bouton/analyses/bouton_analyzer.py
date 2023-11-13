@@ -9,7 +9,8 @@
 #   Description  : 
 #
 #================================================================
-
+import sys
+sys.path.append(r'..\..\pylib')
 import os
 import glob
 import numpy as np
@@ -159,7 +160,7 @@ def calc_overall_features_all(bouton_dir):
     args_list = []
     for swcfile in glob.glob(os.path.join(bouton_dir, '*.swc')):
         fn = os.path.splitext(os.path.split(swcfile)[-1])[0]
-        outfile = f'bouton_features/{fn}.txt'
+        outfile = f'../data/bouton_features/{fn}.txt'
         if os.path.exists(outfile):
             continue
         args_list.append((swcfile, outfile, mask))
@@ -172,7 +173,7 @@ def calc_overall_features_all(bouton_dir):
 
 
 if __name__ == '__main__':
-    bouton_dir = 'bouton_v20230110_swc'
+    bouton_dir = '../data/bouton_v20230110_swc'
 
     calc_overall_features_all(bouton_dir)
 

@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/PBshare/SEU-ALLEN/Users/zuohan/pylib")
+sys.path.append("../../../../pylib")
 
 from pathlib import Path
 import os

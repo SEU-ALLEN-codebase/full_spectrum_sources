@@ -2,7 +2,8 @@
 #import paraview
 #paraview.compatibility.major = 5
 #paraview.compatibility.minor = 11
-
+import sys
+sys.path.append(r'D:\ParaView\ParaView-5.11.0-Windows-Python3.9-msvc2017-AMD64\bin\Lib\site-packages')
 import os,glob
 from paraview.simple import *
 
@@ -17,8 +18,11 @@ renderView1 = GetActiveViewOrCreate('RenderView')
 renderView1.UseColorPaletteForBackground = 0
 renderView1.Background = [1.0, 1.0, 1.0]
 
+#obj_des
+obj_des = input()
+
 ss = 0
-for objfile in glob.glob(r'D:/temp_need/paper/classic_region_soma/*.obj'):
+for objfile in glob.glob(obj_des + '/*.obj'):
     objfile = objfile.replace('\\','/')
     s = objfile.split('/')[-1]
     objname = s.replace('.','').replace('-','')
