@@ -41,6 +41,7 @@ def calc_ds_similarity_among_levels(data_dir='./levels', type_str='stype', struc
     #pdists = np.matmul(vecs, vecs.transpose())
     #pdists = pd.DataFrame(pdists, index=__LEVELS__, columns=__LEVELS__)
     pdists = pd.DataFrame(vecs.transpose(), columns=__LEVELS__)
+    pdists.rename(columns={'bouton': 'varicosity'}, inplace=True)
     pdists = pdists.corr()
 
     rpdists = 1 - pdists
@@ -329,8 +330,9 @@ def calc_distribution_statistics(data_dir='./levels', type_str='stype'):
 
     def plot_heatmap(dfi, types):
         name = dfi.columns[0]
+        keys = [k if k != 'bouton' else 'varicosity' for k in __LEVELS__]
         dfi = pd.DataFrame(dfi[name].to_numpy().reshape(5,-1),
-                           index=__LEVELS__, 
+                           index=keys, 
                            columns=types[:len(types)//len(__LEVELS__)])
         g = sns.heatmap(dfi, cmap='coolwarm', xticklabels=1, square=True,
                         cbar_kws={'aspect':5, 'shrink':0.15, 'pad':0.03,
