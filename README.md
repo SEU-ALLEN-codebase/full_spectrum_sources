@@ -1,5 +1,5 @@
 # full spectrum sources
-Source codes for the full-spectrum neuronal morphometry analysis project. This project is a collaborative work among several groups worldwide that led by Dr. Hanchuan, with significant contributions from Yufeng Liu, Shengdian Jiang, Yingxin Li, Sujun Zhao, and source code refactoring conducted by Yufeng Liu and Qiaobo Gong. 
+Source codes for the full-spectrum neuronal morphometry analysis project. This project is led by Prof. Hanchuan Peng at SEU, and it is a collaborative work across several groups worldwide, with major contributions from Yufeng Liu, Shengdian Jiang, Yingxin Li, Sujun Zhao, and source code refactoring conducted by Yufeng Liu and Qiaobo Gong. 
 
 The project offers a comprehensive framework for extracting and analyzing neuronal morphometry across various scales, ranging from centimeters to micrometers. It also provides tools for cross-scale comparative and integrative analytical paradigm. The primary modules within the full spectrum sources repository encompass **motif**, **arbor**, **full morphology**, **microenviron**, **bouton**, and **neuron population**. Each module includes detailed documentation with step-by-step guidance. These resources aim to support researchers in their studies of neuronal morphometry.
 
