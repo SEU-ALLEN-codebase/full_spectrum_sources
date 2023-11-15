@@ -11,7 +11,7 @@
 #================================================================
 import os
 import sys
-sys.path.append(r'..\..\pylib')
+sys.path.append('../../pylib')
 import glob
 from collections import Counter
 

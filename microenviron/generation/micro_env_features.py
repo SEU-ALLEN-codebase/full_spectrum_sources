@@ -10,7 +10,7 @@
 #
 #================================================================
 import sys
-sys.path.append(r'D..\..\pylib')
+sys.path.append('../../pylib')
 import time
 import numpy as np
 import pandas as pd

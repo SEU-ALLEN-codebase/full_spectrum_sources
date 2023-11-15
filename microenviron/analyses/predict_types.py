@@ -10,7 +10,7 @@
 #
 #================================================================
 import sys
-sys.path.append(r'..\..\pylib')
+sys.path.append('../../pylib')
 import numpy as np
 import pandas as pd
 from scipy.spatial import distance_matrix

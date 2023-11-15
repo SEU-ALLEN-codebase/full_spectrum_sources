@@ -10,7 +10,7 @@
 #
 #================================================================
 import sys
-sys.path.append(r'..\..\pylib')
+sys.path.append('../../pylib')
 import os
 import numpy as np
 import numbers
