@@ -11,7 +11,6 @@
 #================================================================
 import os
 import sys
-sys.path.append('../../pylib')
 import glob
 from collections import Counter
 
@@ -166,19 +165,25 @@ def wrapper(swcfile, scale_factor, outswc):
     mlen, plen = mpp.extract_main_tract(outswc)
 
 if __name__ == '__main__':
-    swc_dir = '../data/registration/S3_registered_ccf'
+    swc_dir = '/PBshare/SEU-ALLEN/Projects/fullNeurons/V2023_01_10/registration/S3_registered_ccf'
     out_dir = '../main_tracts_types'
     ctype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     min_files = 0
     scale_factor = 1.
   
     ptypes, rev_ptypes, p2stypes = load_pstype_from_excel(ctype_file)
+    stypes, rev_stypes, p2stypes = load_type_from_excel(ctype_file)
  
     args_list = []   
     for swcfile in glob.glob(os.path.join(swc_dir, '*')):
         prefix = os.path.split(swcfile)[-1].split('.swc')[0]
+        if prefix not in rev_stypes:
+            stype = 'unk'
+        else:
+            stype = rev_stypes[prefix]
+
         if prefix not in rev_ptypes:
-            ctype = 'unk'
+            ctype = f'unk_{stype}'
         else:
             ctype = rev_ptypes[prefix]
 
