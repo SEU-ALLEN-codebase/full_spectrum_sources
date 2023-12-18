@@ -27,8 +27,8 @@ import sys
 sys.setrecursionlimit(100000)
 
 class BoutonFeatures:
-    def __init__(self, swcfile):
-        tree = self.load_swc(swcfile)
+    def __init__(self, swcfile, scale=25):
+        tree = self.load_swc(swcfile, scale)
         self.morph = Morphology(tree)
 
         self.axons = get_specific_neurite(tree, NEURITE_TYPES['axon'] + [5])
@@ -36,9 +36,10 @@ class BoutonFeatures:
         self.bids = set([bnode[0] for bnode in self.boutons])
 
     @staticmethod
-    def load_swc(swcfile, scale = 25):
+    def load_swc(swcfile, scale):
         tree = parse_swc(swcfile)
-        tree = scale_swc(tree, scale)
+        if scale != 1:
+            tree = scale_swc(tree, scale)
         return tree
 
     def get_num_bouton(self):
@@ -140,8 +141,8 @@ class BoutonFeatures:
         return num_bouton, teb_ratio, den1, gdist, mean_interval, num_targets, num_segs
 
 
-def single_processor(swcfile, outfile, mask):
-    bf = BoutonFeatures(swcfile)
+def single_processor(swcfile, outfile, mask, scale):
+    bf = BoutonFeatures(swcfile, scale=scale)
     print(swcfile)
     fs = bf.calc_overall_features(mask)
     if fs[0] == -1:
@@ -154,7 +155,7 @@ def single_processor(swcfile, outfile, mask):
             fp.write(f', {fi}')
         fp.write('\n')
     
-def calc_overall_features_all(bouton_dir):
+def calc_overall_features_all(bouton_dir, scale):
     mask = load_image(MASK_CCF25_FILE)
  
     args_list = []
@@ -163,7 +164,7 @@ def calc_overall_features_all(bouton_dir):
         outfile = f'../data/bouton_features/{fn}.txt'
         if os.path.exists(outfile):
             continue
-        args_list.append((swcfile, outfile, mask))
+        args_list.append((swcfile, outfile, mask, scale))
 
     from multiprocessing import Pool
     pool = Pool(processes=12)
@@ -174,8 +175,9 @@ def calc_overall_features_all(bouton_dir):
 
 if __name__ == '__main__':
     bouton_dir = '../data/bouton_v20230110_swc'
+    scale = 25.
 
-    calc_overall_features_all(bouton_dir)
+    calc_overall_features_all(bouton_dir, scale)
 
     
 
