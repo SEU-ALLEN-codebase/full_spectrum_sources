@@ -165,11 +165,12 @@ def wrapper(swcfile, scale_factor, outswc):
     mlen, plen = mpp.extract_main_tract(outswc)
 
 if __name__ == '__main__':
+    # The directory containing registered SWC files
     swc_dir = '/PBshare/SEU-ALLEN/Projects/fullNeurons/V2023_01_10/registration/S3_registered_ccf'
     out_dir = '../main_tracts_types'
     ctype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     min_files = 0
-    scale_factor = 1.
+    scale_factor = 1.   # scaling factor for mapping the current coordinates to 1um isotropic space
   
     ptypes, rev_ptypes, p2stypes = load_pstype_from_excel(ctype_file)
     stypes, rev_stypes, p2stypes = load_type_from_excel(ctype_file)

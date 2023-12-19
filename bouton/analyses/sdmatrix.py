@@ -9,8 +9,6 @@
 #   Description  : 
 #
 #================================================================
-import sys
-sys.path.append('../../pylib')
 import os
 import itertools
 import sys

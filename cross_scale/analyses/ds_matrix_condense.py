@@ -261,21 +261,22 @@ if __name__ == '__main__':
         }
     }
 
+ 
+    if 0:   
+        figname = 'sdmatrix_heatmap_stype_all'
+        df = load_cross_scale_features(feat_files, celltype_file)
+        calc_dsmatrix_stype(df, figname)
+        figname = 'sdmatrix_heatmap_sctype_all'
+        calc_dsmatrix_sctype(df, figname)
+        figname = 'sdmatrix_heatmap_sptype_all'
+        calc_dsmatrix_sptype(df, figname)
     
-    figname = 'sdmatrix_heatmap_stype_all'
-    df = load_cross_scale_features(feat_files, celltype_file)
-    calc_dsmatrix_stype(df, figname)
-    figname = 'sdmatrix_heatmap_sctype_all'
-    calc_dsmatrix_sctype(df, figname)
-    figname = 'sdmatrix_heatmap_sptype_all'
-    calc_dsmatrix_sptype(df, figname)
     
-    
-    
-    for type_str in ['stype', 'sctype', 'sptype']:
-        if type_str != 'stype':
-            continue
-        matfile = f'../multi-scale/corr_regionLevel_sdmatrix_heatmap_{type_str}_all.csv'
-        plot_dsmatrix_relplot(matfile, type_str=type_str)
+    if 1:
+        for type_str in ['stype', 'sctype', 'sptype']:
+            if type_str != 'stype':
+                continue
+            matfile = f'../multi-scale/corr_regionLevel_sdmatrix_heatmap_{type_str}_all.csv'
+            plot_dsmatrix_relplot(matfile, type_str=type_str)
     
 
