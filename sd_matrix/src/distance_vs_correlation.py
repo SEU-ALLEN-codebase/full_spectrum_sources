@@ -282,7 +282,7 @@ def estimate_region_projection_size(proj_file, celltype_file, regions=None, regi
     plt.close('all')
 
 if __name__ == '__main__':
-    spos_file = '../../common_lib/misc/soma_pos_1891_v20230110.csv'
+    spos_file = '../../common_lib/misc/soma_pos_1886_v20231211_25um.csv'
     proj_file = '../../common_lib/41586_2021_3941_MOESM4_ESM_proj.csv'
     corr_file = '../multi-scale/corr_neuronLevel_sdmatrix_heatmap_stype_all.csv'
     celltype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'

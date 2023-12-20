@@ -24,7 +24,9 @@ The project offers a comprehensive framework for extracting and analyzing neuron
 [neuron_population](./neuron_population/README.md)
 
 ### Cross-scale analyses
-[cross_scale](./cross_scale/README.md)
+[sd_features](./sd_features/README.md)
+
+[sd_matrix](./sd_matrix/README.md)
 
 ## Installation
 Most of the code is written in Python, and we recommend readers to first set up the environment using Anaconda (version 2023.09). Afterward, you can install or update several dependencies by:
