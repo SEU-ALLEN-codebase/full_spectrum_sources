@@ -13,6 +13,8 @@ import os, glob
 import numpy as np
 import pickle
 
+import sys
+sys.path.append('../../pylib')
 from swc_handler import parse_swc
 
 def load_and_dump(tract_dir='', key='stype'):
@@ -55,6 +57,6 @@ def load_and_dump(tract_dir='', key='stype'):
 
 if __name__ == '__main__':
     tract_dir = '../main_tracts_types'
-    key = 'ptype'
+    key = 'stype'
     load_and_dump(tract_dir, key=key)
 
