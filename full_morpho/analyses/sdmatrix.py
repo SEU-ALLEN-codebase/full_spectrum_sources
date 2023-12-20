@@ -122,7 +122,7 @@ def plot_struct_with_ptype(feat_file, celltype_file, figname, normalize=True, mi
 if __name__ == '__main__':
     feat_file = '../data/feature.txt'
     celltype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
-    outdir = '../data/sd_matrix/levels'
+    outdir = '../../sd_matrix/levels'
 
     if 1:
         # stypes
@@ -131,7 +131,7 @@ if __name__ == '__main__':
         regions_list = regions_list + [list(itertools.chain(*regions_list))]
         for structure, regions in zip(structures, regions_list):
             figname = os.path.join(outdir, f'sdmatrix_fullMorpho_stype_{structure.lower()}')
-            plot_struct(feat_file, celltype_file, figname, regions=regions, vmin=-0.4, vmax=0.8, annot=False)
+            plot_struct(feat_file, celltype_file, figname, regions=regions, vmin=-0.4, vmax=0.8, annot=False, min_num_neurons=9)
 
     if 1:
         # ptypes
@@ -140,10 +140,10 @@ if __name__ == '__main__':
         regions_list = regions_list + [list(itertools.chain(*regions_list))]
         for structure, regions in zip(structures, regions_list):
             figname = os.path.join(outdir, f'sdmatrix_fullMorpho_ptype_{structure.lower()}')
-            plot_struct_with_ptype(feat_file, celltype_file, figname, regions=regions, vmin=-0.4, vmax=0.8, annot=False)
+            plot_struct_with_ptype(feat_file, celltype_file, figname, regions=regions, vmin=-0.4, vmax=0.8, annot=False, min_num_neurons=9)
 
     if 1:
         figname = os.path.join(outdir, f'sdmatrix_fullMorpho_cstype_all')
-        plot_struct_with_cortical_layer(feat_file, celltype_file, figname, regions=CorticalLayers, vmin=-0.4, vmax=0.8, annot=False)
+        plot_struct_with_cortical_layer(feat_file, celltype_file, figname, regions=CorticalLayers, vmin=-0.4, vmax=0.8, annot=False, min_num_neurons=9)
 
 
