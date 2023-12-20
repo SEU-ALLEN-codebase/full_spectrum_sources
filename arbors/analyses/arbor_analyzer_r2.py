@@ -824,10 +824,10 @@ if __name__ == '__main__':
         'dendrite': ['../data/basal_den_sort', '../data/apical_den_sort']
     }
 
-    soma_file = '../data/1891_somalist.txt'
+    soma_file = '../data/1886_somalist.txt'
     soma_type_merge = True
     use_abstract_ptype = True
-    min_num_neurons = 10
+    min_num_neurons = 9
     out_dir = f'min_num_neurons{min_num_neurons}_l2'
     
     arbor_dir = arbor_dir_dict[neurite_type]
