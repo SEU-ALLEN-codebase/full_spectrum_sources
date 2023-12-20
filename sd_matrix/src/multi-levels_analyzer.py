@@ -372,7 +372,6 @@ if __name__ == '__main__':
 
     for type_str in ['stype', 'ptype', 'cstype']:
         calc_ds_similarity_among_levels(type_str=type_str)
-        #calc_intraregional_stereotypy(type_str=type_str)
         calc_intraregional_stereotypy_ridge_plot(type_str=type_str)
         calc_distribution_statistics(type_str=type_str)
     

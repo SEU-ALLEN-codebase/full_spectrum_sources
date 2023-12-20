@@ -240,8 +240,7 @@ if __name__ == '__main__':
         },
         'arbor': {
             'path': ('../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_axonal.csv',
-                  '../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_basal.csv',
-                  '../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_apical.csv'),
+                  '../../arbors/src/min_num_neurons10_l2/features_r2_somaTypes_dendrite.csv'),
             'feat_names': None,
             'drop_key': ['region'],
             'neuron': 'prefix',

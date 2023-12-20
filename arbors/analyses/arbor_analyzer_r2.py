@@ -153,7 +153,7 @@ class ArborFeatures(object):
             return 0
         print(f'High density ratio: {1.0*high_density.sum()/len(density)}')
         
-        coords = np.round(self.swc_array[:, 2:5]).astype(np.int64)[:, ::-1]
+        coords = np.round(self.swc_array[:, 2:5]).astype(np.int)[:, ::-1]
         cmin = coords.min(axis=0)
         cmax = coords.max(axis=0)
         coords = coords - cmin
@@ -332,7 +332,6 @@ def calc_basal_features(soma_types, arbor_dir, spos_dict, min_num_neurons=5, med
 
 def calc_axon_features(soma_types, arbor_dir, spos_dict, min_num_neurons=5, median=True, neurite_type='axonal'):
     fdict = {}
-    test_keys = spos_dict.keys()        # add for bugfix
     if neurite_type == 'axonal':
         keyword = 'axon'
     elif neurite_type == 'apical':
@@ -350,7 +349,6 @@ def calc_axon_features(soma_types, arbor_dir, spos_dict, min_num_neurons=5, medi
                 continue
          
             arbor_file = os.path.join(arbor_dir, f'{prefix}_{keyword}.swc._m3_lt.eswc')
-            if prefix not in test_keys: continue                # add for bugfix
             aa = AxonalArbors(stat_file, arbor_file, spos_dict[prefix])
             print(f'    arbor num: {aa.num_arbors()}')
             features_list = []
@@ -818,16 +816,17 @@ if __name__ == '__main__':
     neurite_type = 'axonal'
 
     arbor_dir_dict = {
-        'axonal': '../data/axon_arbors_round2_ln',
-        'basal': '../data/basal_den_sort',
-        'apical': '../data/apical_den_sort',
-        'dendrite': ['../data/basal_den_sort', '../data/apical_den_sort']
+        'axonal': '../data/axon_80_arbor_sorted',
+        #'axonal': '../data/axon_arbors_l2',
+        'basal': '../data/basal80_sort',
+        'apical': '../data/apical80_sort',
+        'dendrite': '../data/den80_sort']
     }
 
     soma_file = '../data/1886_somalist.txt'
     soma_type_merge = True
     use_abstract_ptype = True
-    min_num_neurons = 9
+    min_num_neurons = 5
     out_dir = f'min_num_neurons{min_num_neurons}_l2'
     
     arbor_dir = arbor_dir_dict[neurite_type]
@@ -845,7 +844,7 @@ if __name__ == '__main__':
     if 1:
         if neurite_type == 'axonal':
             fdict = calc_axon_features(soma_types, arbor_dir, spos_dict, min_num_neurons=min_num_neurons, median=False, neurite_type=neurite_type)
-        elif neurite_type == 'basal' or neurite_type == 'apical':
+        elif neurite_type == 'basal' or neurite_type == 'apical' or neurite_type == 'dendrite':
             fdict = calc_basal_features(soma_types, arbor_dir, spos_dict, min_num_neurons=min_num_neurons, median=False, neurite_type=neurite_type)
         
         # save to file
