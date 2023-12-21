@@ -256,6 +256,8 @@ def calc_intraregional_stereotypy_ridge_plot(data_dir='./levels', type_str='styp
     #plt.setp(g._legend.get_title(), fontsize=0, fontweight='bold')
     #plt.setp(g._legend.get_texts(), fontsize=fontsize+5, fontweight='bold')
     for i, level in enumerate(__LEVELS__):
+        if level == 'bouton':
+            level = 'varicosity'
         g.axes[-1,i].set_xlabel(level, fontsize=fontsize, fontweight='normal', rotation=30)
     
     g.despine(bottom=True, left=True)
