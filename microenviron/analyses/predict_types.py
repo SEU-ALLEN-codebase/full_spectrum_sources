@@ -129,7 +129,8 @@ def predict_microenviron_gs(df_gs, df_me):
 
 if __name__ == '__main__':
     # Surface-related features are inconsistent in Gold standards
-    gs_file = '../gs_local/src/lm_gs_dendrite.csv'
+    gs_file = '../gs_local/src/lm_gs_dendrite.csv'  # L-measure features of the dendries of manually annotated gold standards
+    # the L-measure features of 15K local morphologies
     me_file = '../me_map_new20230510/data/lm_features_d22_15441.csv'
     celltype_file = '../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     nodes_range = (500, 1500)

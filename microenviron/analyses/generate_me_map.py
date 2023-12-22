@@ -768,6 +768,7 @@ def feature_evolution_CP(mefile, debug=True):
 
 
 if __name__ == '__main__':
+    # microenvironment feature file, generated using the script: `../generation/micro_env_features.py`
     mefile = './data/micro_env_features_nodes300-1500_withoutNorm.csv'
     mapfile = 'microenviron_map'
     flip_to_left = True
