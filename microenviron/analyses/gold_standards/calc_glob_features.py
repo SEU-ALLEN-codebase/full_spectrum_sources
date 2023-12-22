@@ -1,4 +1,4 @@
-    #!/usr/bin/env python
+#!/usr/bin/env python
 
 #================================================================
 #   Copyright (C) 2023 Yufeng Liu (Braintell, Southeast University). All rights reserved.
@@ -17,13 +17,14 @@ import subprocess
 import pandas as pd
 import numpy as np
 
-sys.path.append('../../src')
-from config import __FEAT_NAMES22__ as __FEAT_NAMES__
+sys.path.append('../../generation')
+from config import __FEAT_NAMES22__
 
-def calc_global_features(swc_file, vaa3d='D:/Vaa3D/Vaa3D-x.1.1.2_Windows_64bit/Vaa3D-x.exe'):
-    cmd_str = f'{vaa3d} /x global_neuron_feature /f compute_feature /i {swc_file}'
+def calc_global_features(swc_file, vaa3d='/opt/Vaa3D_x.1.1.4_ubuntu/Vaa3D-x'):
+    cmd_str = f'xvfb-run -a -s "-screen 0 640x480x16" {vaa3d} -x global_neuron_feature -f compute_feature -i {swc_file}'
     p = subprocess.check_output(cmd_str, shell=True)
-    output = p.decode().splitlines()[15:-1]
+    output = p.decode().splitlines()[37:-2]
+    #print(output)
     info_dict = {}
     for s in output:
         it1, it2 = s.split(':')
@@ -59,7 +60,7 @@ def calc_global_features(swc_file, vaa3d='D:/Vaa3D/Vaa3D-x.1.1.2_Windows_64bit/V
 
     return features
 
-def calc_global_features_all(swc_dir, outfile, region_file):
+def calc_global_features_all(swc_dir, outfile, region_file, vaa3d=None):
     df_region = pd.read_csv(region_file, index_col='Cell name')
 
     features_all = []
@@ -73,20 +74,21 @@ def calc_global_features_all(swc_dir, outfile, region_file):
             
         else:
             region = np.NaN
-        features = calc_global_features(swcfile)
+        features = calc_global_features(swcfile, vaa3d)
         features_all.append([prefix, region, *features])
         
         iswc += 1
         if iswc % 10 ==  0:
             print(f'--> {iswc} in {time.time() - t0:.2f} s')
 
-    df = pd.DataFrame(features_all, columns=['', 'region_name_r316', *__FEAT_NAMES__])
+    df = pd.DataFrame(features_all, columns=['', 'region_name_r316', *__FEAT_NAMES22__])
     df.to_csv(outfile, float_format='%g', index=False)
 
 if __name__ == '__main__':
-    swc_dir = '../crop_dendrite'
+    swc_dir = '../gs_crop_dendrite'
     outfile = 'lm_gs_dendrite.csv'
+    vaa3d='/opt/Vaa3D_x.1.1.4_ubuntu/Vaa3D-x'
     region_file = '../../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
     
-    calc_global_features_all(swc_dir, outfile, region_file)
+    calc_global_features_all(swc_dir, outfile, region_file, vaa3d)
 

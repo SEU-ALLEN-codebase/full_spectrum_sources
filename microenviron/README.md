@@ -6,7 +6,7 @@ The first step in constructing the microenvironment involves the generation of m
 #### Automatic Tracing Codes Location
 The automatic tracing codes can be found at `generation/42k_script`. Prior to utilizing these codes, please ensure that the following prerequisites are met:
 
-- Cropped images with dimensions of 512x512x256 voxels (in xyz order).
+- Cropped images with dimensions of 512x512x256 voxels (in `xyz` order, corresponds to ~236x236x512um^3).
 
 #### Procedure
 1. **Removal of Dense Images with Multiple Somas**
@@ -54,8 +54,8 @@ A microenvironment is a spatially-tuned ensemble of neighboring neurons. In this
    - We utilize the `global_neuron_feature` plugin integrated with Vaa3D to calculate L-Measure features for each neuron. You may opt to use other morphological features instead of L-Measure features. Alternatively, you can estimate L-Measure features using the L-Measure server (http://cng.gmu.edu:8080/Lm), which implements some features differently. This step results in obtaining 22-dimensional features for each neuron.
    - Script: `calc_global_features.py`
    - Location: `generation`
-   - Input: swc_dir - Directory containing all morphologies
-   - Output: L-Measure feature file for each neuron
+   - Input: swc_dir - Directory containing all registered morphologies. One exemplar reconstructed local morphology (`Img_X_6116.92_Y_10268_Z_4371.18.v3dpbd_stps.swc`) can be found under the directory `data`, and the whole set of reconstructions are archived under the `42k_dataset` folder
+   - Output: L-Measure feature file for all neurons in each brain. An exemplar output file is: `lm_features/lm_d22_150k_0602_201605.csv`
 
 2. **Aggregate Additional Semantic Information**
 
@@ -64,12 +64,12 @@ A microenvironment is a spatially-tuned ensemble of neighboring neurons. In this
    - Location: `generation`
    - Input:
      - swc_dir - Directory containing all morphologies
-     - feature_dir - Directory containing all feature files, with each neuron having a feature file
-   - Output: Merged feature file (e.g., `lm_features_d22_all.csv`)
+     - feature_dir - Directory containing all feature files, with each brain having a feature file (containing multiple neurons)
+   - Output: Merged feature file (e.g., `lm_features_d22_all.csv`). An exemplar file containing 10 neurons can be found at `data/lm_features_d22_all_part.csv`
 
 3. **Construction of Microenvironments**
 
-   - As outlined in our manuscript, we first identify the top 5 neurons within a given radius. This radius is estimated as the 50th percentile of all distances between neurons and their top 5 nearest neighbors (refer to the "estimate_radius" function). A microenvironment is then defined as the collection of the target neuron and the selected top 5 (at most) neurons. The feature of a microenvironment is a distance-weighted summary of all neurons within that microenvironment.
+   - As outlined in our manuscript, we first identify the top 5 neurons within a given radius. This radius is estimated as the 50th percentile of all distances between neurons and their top 5 nearest neighbors (refer to the "estimate_radius" function). A microenvironment is then defined as the collection of the target neuron and the selected top 5 (at most) neurons. The feature of a microenvironment is a distance-weighted summary of all neurons within that microenvironment. Here we used an heuristic 
    - Script: `micro_env_features.py`
    - Location: `generation`
    - Input: The merged feature file (e.g., `./data/lm_features_d22_all.csv`)
@@ -93,3 +93,5 @@ A microenvironment is a spatially-tuned ensemble of neighboring neurons. In this
      - For paths 1 to 3: Run the function `sectional_dsmatrix`, and then `plot_me_dsmatrix`
      - For path 4 (within CP region): Use `feature_evolution_CP_radial`
    - Input: Microenvironment feature file (e.g., `micro_env_features_nodes300-1500_withoutNorm.csv`)
+
+3. ****

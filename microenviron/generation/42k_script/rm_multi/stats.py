@@ -36,7 +36,9 @@ def get_matrix(pts):
 
 
 if __name__ == '__main__':
+    # Configuring the file list containing the soma coordinates of all image blocks
     all = Path("/home/vkzohj/data/enhanced_soma_images/all.txt")
+    data_dir = '/home/vkzohj/data'
     coords_pik='coords.pickle'
     
     # count files
@@ -49,7 +51,7 @@ if __name__ == '__main__':
         with open(all) as fp:
             for line in fp.readlines():
                 path = Path(line.rstrip()).relative_to('..')
-                path = Path('/home/vkzohj/data') / path
+                path = Path(data_dir) / path
                 brain = path.parent.parts[-1]
                 if not path.exists():
                     continue

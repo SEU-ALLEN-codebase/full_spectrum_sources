@@ -20,10 +20,10 @@ import numpy as np
 sys.path.append('../src')
 from config import __FEAT_NAMES22__
 
-def calc_global_features(swc_file, vaa3d='D:/Vaa3D/Vaa3D-x.1.1.2_Windows_64bit/Vaa3D-x.exe'):
-    cmd_str = f'{vaa3d} /x global_neuron_feature /f compute_feature /i {swc_file}'
+def calc_global_features(swc_file, vaa3d='/opt/Vaa3D_x.1.1.4_ubuntu/Vaa3D-x'):
+    cmd_str = f'xvfb-run -a -s "-screen 0 640x480x16" {vaa3d} -x global_neuron_feature -f compute_feature -i {swc_file}'
     p = subprocess.check_output(cmd_str, shell=True)
-    output = p.decode().splitlines()[15:-1]
+    output = p.decode().splitlines()[37:-2]
     info_dict = {}
     for s in output:
         it1, it2 = s.split(':')
@@ -79,8 +79,8 @@ def calc_global_features_all(swc_dir, outfile):
     df.to_csv(outfile, float_format='%g', index=False)
 
 if __name__ == '__main__':
-    #swc_dir = 'D:\\mygitcode\\full_spectrum_sources\\microenviron\\generation\\data\\improved_reg\\42k_local_morphology_new20230510_gcoord_final'
-    swc_dir = '.\\data\\improved_reg\\42k_local_morphology_new20230510_gcoord_final'
+    # please configuring directory of the registered SWC
+    swc_dir = '/PBshare/SEU-ALLEN/Users/yfliu/transtation/Research/platform/micro_environ/data/improved_reg/42k_local_morphology_new20230510_gcoord_final'
     out_dir  = './lm_features'
 
     
@@ -96,14 +96,10 @@ if __name__ == '__main__':
         args_list.append((brain_dir, outfile))
         #calc_global_features_all(brain_dir, outfile)
 
-
+    # Run in parallel
     from multiprocessing import Pool
     pool = Pool(processes=24)
     pool.starmap(calc_global_features_all, args_list)
     pool.close()
     pool.join()
-    '''
-    for args in args_list:
-        calc_global_features_all(*args)
-        break
-    '''
+    

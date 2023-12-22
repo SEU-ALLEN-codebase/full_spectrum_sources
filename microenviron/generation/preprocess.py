@@ -163,7 +163,7 @@ def aggregate_information(feature_dir, swc_dir):
 
 if __name__ == '__main__':
     # The directory `swc_dir` contains all the reconstructed morphologies in the format of SWC. The morphologies are registered to the CCFv3 space.
-    swc_dir = './data/improved_reg/42k_local_morphology_new20230510_gcoord_final'
+    swc_dir = '/PBshare/SEU-ALLEN/Users/yfliu/transtation/Research/platform/micro_environ/data/improved_reg/42k_local_morphology_new20230510_gcoord_final'
     # Driectory containing the global features for each neuron
     feature_dir = './lm_features'
     aggregate_information(feature_dir, swc_dir)
