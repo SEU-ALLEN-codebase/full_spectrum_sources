@@ -94,4 +94,15 @@ A microenvironment is a spatially-tuned ensemble of neighboring neurons. In this
      - For path 4 (within CP region): Use `feature_evolution_CP_radial`
    - Input: Microenvironment feature file (e.g., `micro_env_features_nodes300-1500_withoutNorm.csv`)
 
-3. ****
+3. **Evaluation of reconstructed neurons**
+
+    - Firstly, crop the manual annotations (gold standards), using the script: `analyses/gold_standards/crop.py`
+    - Secondly, find out the correspondence of neurons from the full morphologies and local morphologies based on the brain and soma positions. This can be done using the script `analyses/gold_standards/utils/match_gs_recon.py`. Parameters are:
+        - "gs_dir": The directory containing the morphologies (in format of SWC) with coordinates in original image space
+        - "crop_dir": directory containing cropped SWC in 25um isotropic coordinate space
+        - "recon_dir": directory containing reconstructed SWCs
+        - "outfile": output file
+    - Then, calculate the morphological features of the matched cropped gold standards. This can be done by running the script: `analyses/gold_standards/calc_glob_features.py`
+    - Bench-testing the reconstructed neurons using distance metrics (e.g. spatial distance, substantial spatial distance, and percentage of different structures), or topological morphology descriptor (TMD) by running the script: `analyses/gold_standards/benchmark.py`
+    - Finally, plot the morphological features distributions and TMD distributions, by running the script: `analyses/gold_standards/plot.py`
+

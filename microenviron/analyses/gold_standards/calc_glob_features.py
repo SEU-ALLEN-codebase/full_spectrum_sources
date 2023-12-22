@@ -85,10 +85,10 @@ def calc_global_features_all(swc_dir, outfile, region_file, vaa3d=None):
     df.to_csv(outfile, float_format='%g', index=False)
 
 if __name__ == '__main__':
-    swc_dir = '../gs_crop_dendrite'
-    outfile = 'lm_gs_dendrite.csv'
-    vaa3d='/opt/Vaa3D_x.1.1.4_ubuntu/Vaa3D-x'
-    region_file = '../../../common_lib/41586_2021_3941_MOESM4_ESM.csv'
+    swc_dir = '../gs_crop_dendrite' # directory containing the cropped dendrites of the gold standards
+    outfile = 'lm_gs_dendrite.csv'  # output file
+    vaa3d='/opt/Vaa3D_x.1.1.4_ubuntu/Vaa3D-x'   # Vaa3D executable
+    region_file = '../../../common_lib/41586_2021_3941_MOESM4_ESM.csv'  # meta file containing the region for each neuron
     
     calc_global_features_all(swc_dir, outfile, region_file, vaa3d)
 
