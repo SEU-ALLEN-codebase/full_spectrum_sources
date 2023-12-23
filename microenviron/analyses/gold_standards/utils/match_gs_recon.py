@@ -20,7 +20,7 @@ import sys
 sys.path.append('../../../../pylib')
 from swc_handler import get_soma_from_swc
 
-gs_dir = '/data/lyf/data/fullNeurons/V2023_12_11/profiled_final'
+gs_dir = '/data/lyf/data/fullNeurons/V2023_12_22/profiled_final'
 crop_dir = '/home/lyf/Research/publication/full-spectrum/micro_environ/benchmark/gs_crop_dendrite_tmd'
 recon_dir = '/home/lyf/Research/publication/full-spectrum/micro_environ/benchmark_old/recon1891_weak1854_tmd'
 outfile = 'file_mapping1854_tmd.csv'
@@ -82,7 +82,7 @@ for swcfile in glob.glob(os.path.join(recon_dir, '*swc')):
 res = pd.DataFrame(res, columns=gs.columns)
  
 
-dthr = 2*1.732
+dthr = 10
 brains = np.unique(res.brain_id)
 mindices = []
 for brain in brains:
@@ -104,7 +104,7 @@ for brain in brains:
     dflag = vmin < dthr
     fidx = np.nonzero(dflag)[0]
     
-    pairs = [[ri, gi] for (ri, gi) in zip(ridx, gidx[imin])]
+    pairs = [[ri, gi] for (ri, gi) in zip(ridx[dflag], gidx[imin][dflag])]
     mindices.extend(pairs)
 
 mindices = np.array(mindices)

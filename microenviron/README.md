@@ -106,3 +106,8 @@ A microenvironment is a spatially-tuned ensemble of neighboring neurons. In this
     - Bench-testing the reconstructed neurons using distance metrics (e.g. spatial distance, substantial spatial distance, and percentage of different structures), or topological morphology descriptor (TMD) by running the script: `analyses/gold_standards/benchmark.py`
     - Finally, plot the morphological features distributions and TMD distributions, by running the script: `analyses/gold_standards/plot.py`
 
+4. **Estimate the microenvironment feature for each manual annotation**
+    The microenvironment features of a manually annotated single neuron is estimated by finding the microenvironment with the most similar L-measure features from the SEU-D15K. This is done by running the script `analyses/predict_types.py`
+
+
+
