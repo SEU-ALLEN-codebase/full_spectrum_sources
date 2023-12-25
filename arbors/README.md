@@ -1,4 +1,4 @@
-## Arbors
+# Arbors
 An arbor in this context is a tight-packing sub-neuronal tree of a neuron morphology. This arborization of a morphology is done by the Auto-Arbor program (Peng et al., Nature, 2021). The automatic arbor detection algorithm operates under the assumption that a morphology can be represented as a graph, wherein each node corresponds to a vertex, and the parent-child compartment relations are treated as edges. It leverages spectral clustering techniques to partition all nodes into various number of clusters, which we call arbors in this work.
 
 Within our current framework, we treat each dendrite as a separate arbor, and the axons are segmented into one or several arbors using the Auto-Arbor (`autoarbor_v1_yf.py`). While users can utilize original version of the registered version of SWCs as input, we highly recommend employing down-sampled SWCs to enhance calculation speed. In our own practice, we down-sampled each SWC, achieving a morphology with approximately 80-micron spaced intervals, utilizing the `resample_swc` plugin and sorting the nodes using `sort_neuron_swc` plugin available in Vaa3D. 
