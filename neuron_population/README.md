@@ -1,7 +1,4 @@
 # neuron_population
-## Description
-
-
 ## Usage
 ### Generation[`./generation`]
 Users can get the neurite segmentation simply by runing:
