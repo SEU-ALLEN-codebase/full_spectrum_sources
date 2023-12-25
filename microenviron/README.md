@@ -1,5 +1,4 @@
 # microenviron
-## Description
 ## Usage
 ### Ⅰ. Local Morphology Generation (Optional)
 The first step in constructing the microenvironment involves the generation of morphologies, which can be dendrites, complete morphologies, or any sub-neuronal arbors derived from full morphologies. In this project, we have utilized automatically traced local morphologies to represent local image blocks. As such, the initial phase necessitates the acquisition of an adequate number of morphologies from neuronal images. Below, we provide a comprehensive set of exemplary procedures for tracing neurons within extensive neuronal blocks.
