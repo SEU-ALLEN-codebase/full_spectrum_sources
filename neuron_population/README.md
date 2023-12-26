@@ -28,4 +28,4 @@ The generation script takes input of:
 		python paraview_obj.py
 		D:/temp_need/paper/classic_region_soma
 
-Exemplar data are provided in the directory `../../data_notebook`.
+
