@@ -10,11 +10,11 @@ library(dendextend)
 library(dendsort)
 
 ### read data
-axonF<-read.table("/Users/krystal/Desktop/project/cloud_paper/1214_data/axon_feature.txt")
+axonF<-read.table("../data/Fig5/axon_feature.txt")
 colnames(axonF)<-c('name','arbor_id','region','max_density','num_nodes','total_path_length','volume','branch','d_to_soma','d_to_soma2','hub','variance_ratio')
 
-table<-read.table("/Users/krystal/Desktop/project/cloud_paper/results/1891_type.txt",header=TRUE)
-ssp_arbor_layer_initial<-read.table("/Users/krystal/Desktop/project/cloud_paper/1214_data/SSp_arbor_layer_info.txt")
+table<-read.table("../data/Fig5/1891_type.txt",header=TRUE)
+ssp_arbor_layer_initial<-read.table("../data/Fig5/SSp_arbor_layer_info.txt")
 colnames(ssp_arbor_layer_initial)<-c('name','L1','L2/3','L4','L5','L6a','L6b','Non-cortical')
 
 keep<--1
@@ -28,7 +28,7 @@ keep<-keep[-1]
 # remove arbors with few projections
 ssp_arbor_layer<-ssp_arbor_layer_initial[keep,]
 
-LD_order<-read.table("/Users/krystal/Desktop/project/cloud_paper/results/filtered_category.txt",header=TRUE,sep=",")
+LD_order<-read.table("../data/Fig5/filtered_category.txt",header=TRUE,sep=",")
 
 # combine all necessary information into a united table
 ssp_table<-matrix(0,nrow = nrow(ssp_arbor_layer),ncol=12)
@@ -66,7 +66,7 @@ ssp_table2$L6a<-as.numeric(ssp_table2$L6a)
 ssp_table2$L6b<-as.numeric(ssp_table2$L6b)
 ssp_table2$`Non_cortical`<-as.numeric(ssp_table2$`Non_cortical`)
 
-write.table(unique(ssp_table2$name),file="/Users/krystal/Desktop/project/cloud_paper/1214_data/final_sspArbor_namelist.txt",col.names = 'name',row.names = FALSE,quote = FALSE)
+write.table(unique(ssp_table2$name),file="../data/Fig5/final_sspArbor_namelist.txt",col.names = 'name',row.names = FALSE,quote = FALSE)
 
 ssp_proj<-ssp_table2
 
@@ -119,8 +119,8 @@ for(i in 1:4){
   ssp_layer_projD2[i,]<-(ssp_layer_projD[i,]-minpl)/(maxpl-minpl)
 }
 
-write.table(ssp_stype_projD2,file = "/Users/krystal/Desktop/project/cloud_paper/1214_data/ssp_stype_proj.txt",col.names = FALSE,row.names = FALSE)
-write.table(ssp_layer_projD2,file = "/Users/krystal/Desktop/project/cloud_paper/1214_data/ssp_layer_proj.txt",col.names = FALSE,row.names = FALSE)
+write.table(ssp_stype_projD2,file = "../data/Fig5/ssp_stype_proj.txt",col.names = FALSE,row.names = FALSE)
+write.table(ssp_layer_projD2,file = "../data/Fig5/ssp_layer_proj.txt",col.names = FALSE,row.names = FALSE)
 
 
 ## 统计subtype
@@ -265,4 +265,4 @@ for(i in ssp){
   }
 }
 
-write.table(ssp_table2,file = "/Users/krystal/Desktop/project/cloud_paper/0511/ssp_table.txt",col.names = TRUE,row.names = FALSE)
+write.table(ssp_table2,file = "ssp_table.txt",col.names = TRUE,row.names = FALSE)
