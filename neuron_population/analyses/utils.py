@@ -16,19 +16,20 @@ import copy
 import math
 import numpy as np
 import pandas as pd
+import seaborn as sns
 from swc_handler import parse_swc
 
 from file_io import load_image
 
-def write_json(write_dict,dict_file):
-    dict_object = json.dumps(write_dict)
-    with open(dict_file, "w") as f:
+def write_json(write_file,des_file):
+    dict_object = json.dumps(write_file)
+    with open(des_file, "w") as f:
         f.write(dict_object)
         
-def load_json(dict_file):
-    with open(dict_file, "r") as f:
-        load_dict = json.loads(f.read())
-    return load_dict
+def load_json(des_file):
+    with open(des_file, "r") as f:
+        load_file = json.loads(f.read())
+    return load_file
 
 def load_json_key2int(dict_file):
     with open(dict_file, "r") as f:
@@ -168,6 +169,17 @@ def get_region_name_list(region_unit_id_list,uint):
         region_name_list.append(region_name)
     return region_name_list
 
+def get_region_u32id_list(region_name_list):
+    acronym_tree = get_tree_from('acronym')
+    region_u32id_list = []
+    for region_name in region_name_list:
+        try:
+            region_u32id = int(acronym_tree[region_name]['id'])
+        except:
+            region_u32id = 0
+        region_u32id_list.append(region_u32id)
+    return region_u32id_list
+
 def get_region_rgb_list(region_uint_list,uint=32):
     region_rgb_list = []
     u32_id_tree = get_tree_from('id')
@@ -187,3 +199,11 @@ def color_map(map_dict,colors):
     value_color_dict = dict(zip(values,colors))
     new_dict = dict([(k,value_color_dict[v]) for k,v in map_dict.items()])
     return new_dict,value_color_dict
+
+def get_colorcode16_list(value_list,nc=10,cmap='spring',reverse=True):        
+    rgblist = (np.array(sns.color_palette(cmap,nc+1))*255).astype(int)
+    if reverse: 
+        rgblist = rgblist[nc::-1,:]
+    code16_list = ["".join([hex(c)[2:].rjust(2,'0').upper() for c in rgb]) for rgb in rgblist]
+    value_code16_list = [code16_list[v] for v in value_list]
+    return value_code16_list
