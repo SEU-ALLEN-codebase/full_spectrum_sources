@@ -50,7 +50,7 @@ def load_json_keys2int(dict_file):
     return new_dict
 
 def get_tree():
-    with open('../../assets/tree_yzx.json','r') as f:
+    with open('../data/Fig2/assets/tree_yzx.json','r') as f:
         tree = json.loads(f.read())
     return tree
 
@@ -63,7 +63,7 @@ def get_tree_from(info,hold=[]):
     return info_tree
 
 def load_level_u32csv():
-    level_file = '../../assets/level.csv'
+    level_file = '../data/Fig2/assets/level.csv'
     level_df = pd.read_csv(level_file)
     return level_df
 
@@ -92,12 +92,12 @@ def get_n1327_n4_u32dict():
     return n1327_n5_u32dict                          
 
 def get_u32_u16_id_dict():
-    u32_u16_id_dict_file = f'../../assets/u32_u16_dict.json'
+    u32_u16_id_dict_file = f'../data/Fig2/assets/u32_u16_dict.json'
     u32_u16_id_dict = load_json_key2int(u32_u16_id_dict_file)
     return u32_u16_id_dict
 
 def get_u16_u32_id_dict():
-    u16_u32_id_dict_file = '../../assets/u16_u32_dict.json'
+    u16_u32_id_dict_file = '../data/Fig2/assets/u16_u32_dict.json'
     u16_u32_id_dict = load_json_key2int(u16_u32_id_dict_file)
     return u16_u32_id_dict
 
@@ -131,7 +131,7 @@ def get_level_id_list(id_list,level):
     return level_id_list   
     
 def get_voxel_center_neighbor_dict(level,uint):
-    dict_file = f'../../assets/n{level}_u{uint}_voxel_center_neighbor_dict.json'
+    dict_file = f'../data/Fig2/assets/n{level}_u{uint}_voxel_center_neighbor_dict.json'
     load_dict = load_json_keys2int(dict_file)
     return load_dict
 #nrrd u25 voxel, nrrd u25 center, nrrd neighbor 
@@ -142,7 +142,7 @@ def get_dict(level,uint,key=['voxel','center','neighbor'][0]):
   
 def get_u25voxel_dict_from_nrrd(level,uint,imgfile='',allow0=False):    
     if imgfile=='': 
-        imgfile = f'../../assets/n{level}_u{uint}.nrrd'
+        imgfile = f'../data/Fig2/assets/n{level}_u{uint}.nrrd'
     dtype = np.uint32 if uint==32 else np.uint16
     image = load_image(imgfile).astype(dtype)
     vs,cs = np.unique(image,return_counts=True)
