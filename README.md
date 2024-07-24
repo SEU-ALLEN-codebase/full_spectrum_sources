@@ -65,6 +65,7 @@ full-spectrum
 Most of the code is written in Python, and we recommend readers to first set up the environment using Anaconda (version 2023.09). Afterward, you can install or update several dependencies by:
 
 	pip install -r requirements.txt
+The installtion is tested on Ubuntu 20.04, and should be finished in minutes.
 
 There are some customized visualization snippets using other standardalone third-party non-Python packages, including R (version 4.2.2), and ParaView (5.11.0) [https://www.paraview.org/download/](https://www.paraview.org/download/) to execute *paraview\_obj.py*,*paraview\_obj.py* in *neuron_population/analyses*.
 
